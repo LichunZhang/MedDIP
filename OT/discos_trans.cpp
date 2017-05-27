@@ -17,12 +17,14 @@ void DCT(double *f, double *F, int r) {
     complex<double> *X = new complex<double>[count * 2];  //需拓展成2N点进行FFT变换
     memset(X, 0, sizeof(complex<double>) * count * 2);   //赋初值0
 
-    //将时域点写入数组X (N点后均为0)
+    // 将时域点写入数组X (N点后均为0)
     for (long i = 0; i < count; ++i)
         X[i] = complex<double>(f[i], 0);
-    FFT(X, X, r + 1);    //调用FFT_DC 延拓为2N,因此为r+1
+    FFT(X, X, r + 1);    //调用FFT 延拓为2N,因此为r+1
     F[0] = X[0].real() / sqrt(count);  //F[0]
     double temp = sqrt((double) 2 / count);
+
+    // 频域赋值，只取实部
     for (long i = 1; i < count; ++i)
         F[i] = temp * (cos(i * M_PI / (2 * count)) * X[i].real() +
                        sin(i * M_PI / (2 * count)) * X[i].imag());

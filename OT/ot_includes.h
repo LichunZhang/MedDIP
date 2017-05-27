@@ -12,8 +12,6 @@
 //using namespace std;
 using std::complex;
 
-//void FFT_DC(double *TD, double *FD, int r);
-
 void FFT(complex<double> *TD, complex<double> *FD, int r);
 
 template<typename T>
