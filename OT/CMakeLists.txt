@@ -1,8 +1,8 @@
-PROJECT(FourierTrans)
+PROJECT(OrthogonalTrans)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 SET(CMAKE_CXX_STANDARD 11)
 
-SET(SOURCE_FILES fourier_trans.cpp fourier_trans.h)
+SET(SOURCE_FILES fourier_trans.cpp discos_trans.cpp main.cpp ot_includes.h)
 INCLUDE_DIRECTORIES(../MHDIO)
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR})
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
