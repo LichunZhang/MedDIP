@@ -17,7 +17,3 @@
 void Rotate(void *im, size_t width, size_t height, size_t slice, int angle) {
 
 }
-
-int main(int argc, char *argv[]) {
-    return 0;
-}

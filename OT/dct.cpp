@@ -4,7 +4,7 @@
 // Date:    2017/5/26 下午11:27
 // Copyright (c) 2017 Lichun Zhang. All rights reserved.
 
-#include "ot_includes.h"
+#include "ortho_trans.h"
 
 /**!
  * @brief 离散余弦变换
