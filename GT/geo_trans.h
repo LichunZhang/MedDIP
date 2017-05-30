@@ -14,6 +14,7 @@
 
 /**!
  * @brief 平移图像 基于目标图像源图像的像素点位置关系 逐点运算
+ * x1 = x0 + offsetX, y1 = y0 + offsetY
  * 不改变图像大小 移出部分被截去 空白部分用黑色(0)填充
  * @tparam T 源图像数据类型
  * @param im 源图像指针
@@ -33,7 +34,7 @@ bool Translation(T *im, size_t width, size_t height, size_t slice,
     T *lpDst = nullptr;
     int i0 = 0, j0 = 0;  // 像素在源图中的坐标
     for (size_t k = 0; k < slice; ++k) {
-        auto p = k * width * height;
+        int p = k * width * height;
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
                 lpDst = &new_im[i * width + j];
@@ -111,7 +112,7 @@ bool Translation2(T *im, size_t width, size_t height, size_t slice,
     if (visible) {
         for (size_t k = 0; k < slice; ++k) {
             memset(new_im, 0, sizeof(T) * width * height);
-            auto p = k * width * height;
+            int p = k * width * height;
             for (size_t i = 0; i < h; ++i) {
                 memcpy(&new_im[(top_dst + i) * width + left_dst],
                        &im[p + (top_src + i) * width + left_src],
@@ -127,6 +128,92 @@ bool Translation2(T *im, size_t width, size_t height, size_t slice,
     }
     return true;
 
+}
+
+/**!
+ * @brief 镜像变换。根据新图与源图点的关系。可指定镜像方向为水平/垂直。
+ * (水平)x1 = width - x0, y1= height; (垂直)x1 = x0, y1 = height - y0
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param drt 镜像方向 true为水平 false为垂直
+ * @return 操作是否成功
+ */
+template<typename T>
+bool Mirror(T *im, size_t width, size_t height, size_t slice, bool drt) {
+    if (!im) return false;
+    T *new_im = new T[width * height];
+    if (!new_im) return false;
+    size_t i0 = 0, j0 = 0;
+    int p0 = 0, p1 = 0;
+    // 判断方向 true为水平 false为垂直
+    for (size_t k = 0; k < slice; ++k) {
+        p0 = k * width * height;
+        for (size_t i = 0; i < height; ++i) {
+            p1 = i * width;
+            for (size_t j = 0; j < width; ++j) {
+                if (drt) {
+                    i0 = i;
+                    j0 = width - j;
+                } else {
+                    i0 = height - i;
+                    j0 = j;
+                }
+                new_im[p1 + j] = im[p0 + i0 * width + j0];
+            }
+        }
+        memcpy(&im[p0], new_im, sizeof(T) * width * height);
+    }
+    return true;
+}
+
+/**!
+ * @brief 镜像变换。根据位置关系。可指定镜像方向为水平/垂直。
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param drt 镜像方向 true为水平 false为垂直
+ * @return 操作是否成功
+ */
+template<typename T>
+bool Mirror2(T *im, size_t width, size_t height, size_t slice, bool drt) {
+    if (!im) return false;
+    int p0 = 0, p1 = 0;
+    // 水平镜像
+    if (drt) {
+        for (int k = 0; k < slice; ++k) {
+            p0 = k * width * height;
+            for (size_t i = 0; i < height; ++i) {
+                p1 = i * width;
+                for (size_t j = 0; j < width / 2; ++j) {
+                    // 第i行第j个像素
+                    T temp = im[p0 + p1 + j];
+                    // 第i行倒数第j个像素
+                    im[p0 + p1 + j] = im[p0 + width * (i + 1) - (j + 1)];
+                    im[p0 + width * (i + 1) - (j + 1)] = temp;
+                }
+            }
+        }   //垂直镜像
+    } else {
+        T *new_im = new T[width];
+        if (!new_im) return false;
+        for (size_t k = 0; k < slice; ++k) {
+            p0 = k * width * height;
+            for (size_t i = 0; i < height / 2; ++i) {
+                // 第i行
+                memcpy(new_im, &im[p0 + i * width], sizeof(T) * width);
+                // 倒数第i行
+                memcpy(&im[p0 + i * width], &im[p0 + (height - 1 - i) * width], sizeof(T) * width);
+                memcpy(&im[p0 + (height - 1 - i)*width], new_im, sizeof(T) * width);
+            }
+        }
+        delete[] new_im;
+    }
+    return true;
 }
 
 void Rotate(void *im, size_t width, size_t height, size_t slice, int angle);

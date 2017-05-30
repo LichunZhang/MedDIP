@@ -9,11 +9,15 @@
 #include <mhd_reader.h>
 #include "geo_trans.h"
 
-void GetTransParameters(size_t &index, size_t &offsetX, size_t &offsetY);
+void GetTransParameters(size_t &offsetX, size_t &offsetY, bool &type);
 
-void TestTranslation(const char *input, const char *output, size_t offsetX, size_t offsetY);
+void TestTranslation(const char *input, const char *output,
+                     size_t offsetX, size_t offsetY,
+                     bool type);
 
-void TestTranslation2(const char *input, const char *output, size_t offsetX, size_t offsetY);
+void GetMirrorParameters(bool &direction, bool &type);
+
+void TestMirror(const char *input, const char *output, bool direction, bool type);
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -21,39 +25,43 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     std::cout << "Functions:\n"
-              << "1: Translation\n";
+              << "1: Translation\n"
+              << "2: Mirror\n";
     auto index = 0;
     std::cin >> index;
     switch (index) {
-        case 1:
-            size_t t, offset_x, offset_y;
-            GetTransParameters(t, offset_x, offset_y);
-            if (t == 1)
-                TestTranslation(argv[1], argv[2], offset_x, offset_y);
-            else if (t == 2)
-                TestTranslation2(argv[1], argv[2], offset_x, offset_y);
-            else
-                return 1;
+        case 1: {
+            bool t = 1;
+            size_t offset_x = 0, offset_y = 0;
+            GetTransParameters(offset_x, offset_y, t);
+            TestTranslation(argv[1], argv[2], offset_x, offset_y, t);
             break;
-        case 2:
+        }
+        case 2: {
+            bool t = 0, drt = 0;
+            GetMirrorParameters(drt, t);
+            TestMirror(argv[1], argv[2], drt, t);
             break;
+        }
         default:
             break;
     }
     return 0;
 }
 
-void GetTransParameters(size_t &index, size_t &offsetX, size_t &offsetY) {
-    std::cout << "Please enter the translation method: 1 or 2\n";
-    std::cin >> index;
+void GetTransParameters(size_t &offsetX, size_t &offsetY, bool &type) {
     std::cout << "Please enter the translation parameters:\n"
               << "X:";
     std::cin >> offsetX;
     std::cout << "Y:";
     std::cin >> offsetY;
+    std::cout << "Please enter the translation method: 0 or 1\n";
+    std::cin >> type;
 }
 
-void TestTranslation(const char *input, const char *output, size_t offsetX, size_t offsetY) {
+void TestTranslation(const char *input, const char *output,
+                     size_t offsetX, size_t offsetY,
+                     bool type = 1) {
 
     MHDReader *reader = new MHDReader(input);
     if (!reader->GetImData()) {
@@ -61,29 +69,45 @@ void TestTranslation(const char *input, const char *output, size_t offsetX, size
         delete reader;
         return;
     }
-
-    bool flag =
-            ::Translation(reader->GetImData(),
-                          reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
-                          offsetX, offsetY);
+    bool flag = false;
+    if (type == 1)
+        flag =
+                ::Translation2(reader->GetImData(),
+                               reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                               offsetX, offsetY);
+    else
+        flag =
+                ::Translation(reader->GetImData(),
+                              reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                              offsetX, offsetY);
     if (flag)
         reader->Write(output);
     delete reader;
 }
 
-void TestTranslation2(const char *input, const char *output, size_t offsetX, size_t offsetY) {
+void GetMirrorParameters(bool &direction, bool &type) {
+    std::cout << "Please enter the direction: 0(vertical)/1(horizontal)\n";
+    std::cin >> direction;
+    std::cout << "Please enter the mirror method: 0 or 1\n";
+    std::cin >> type;
+}
 
+void TestMirror(const char *input, const char *output, bool direction, bool type = 1) {
     MHDReader *reader = new MHDReader(input);
     if (!reader->GetImData()) {
         std::cout << "Read input failed!\n";
         delete reader;
         return;
     }
-
-    bool flag =
-            ::Translation2(reader->GetImData(),
-                           reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
-                           offsetX, offsetY);
+    bool flag = false;
+    if (type == 0)
+        flag = ::Mirror(reader->GetImData(),
+                        reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                        direction);
+    else
+        flag = ::Mirror2(reader->GetImData(),
+                         reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                         direction);
     if (flag)
         reader->Write(output);
     delete reader;
