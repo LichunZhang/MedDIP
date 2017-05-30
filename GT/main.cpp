@@ -21,6 +21,10 @@ void TestMirror(const char *input, const char *output, bool direction, bool type
 
 void TestTranspose(const char *input, const char *output);
 
+void GetZoomParameters(float &rationX, float &rationY);
+
+void TestZoom(const char *input, const char *output, float rationX, float rationY);
+
 int main(int argc, char *argv[]) {
     if (argc < 3) {
         std::cout << "Usage: inputname outputname\n";
@@ -29,7 +33,8 @@ int main(int argc, char *argv[]) {
     std::cout << "Functions:\n"
               << "1: Translation\n"
               << "2: Mirror\n"
-              << "3: Transpose\n";
+              << "3: Transpose\n"
+              << "4: Zoom\n";
     int index = 0;
     std::cin >> index;
     switch (index) {
@@ -48,6 +53,12 @@ int main(int argc, char *argv[]) {
         }
         case 3: {
             TestTranspose(argv[1], argv[2]);
+            break;
+        }
+        case 4: {
+            float rationX = 0.0, rationY = 0.0;
+            GetZoomParameters(rationX, rationY);
+            TestZoom(argv[1], argv[2], rationX, rationY);
             break;
         }
         default:
@@ -135,13 +146,39 @@ void TestTranspose(const char *input, const char *output) {
     if (flag) {
         MHDWriter *writer = new MHDWriter(output);
         size_t dims[3] = {reader->GetImHeight(), reader->GetImWidth(), reader->GetImSlice()};
-//        size_t* dims = new size_t[3];
-//        dims[0] =reader->GetImHeight();
-//        dims[1] =reader->GetImWidth();
-//        dims[2] = reader->GetImSlice();
         writer->SetImgData(reader->GetImData(), dims);
         writer->WriteFile(output);
         delete writer;
+    }
+    delete reader;
+}
+
+void GetZoomParameters(float &rationX, float &rationY) {
+    std::cout << "Please enter the zoom ration:\nX:";
+    std::cin >> rationX;
+    std::cout << "Y:";
+    std::cin >> rationY;
+}
+
+void TestZoom(const char *input, const char *output, float rationX, float rationY) {
+    MHDReader *reader = new MHDReader(input);
+    if (!reader->GetImData()) {
+        std::cout << "Read input failed!\n";
+        delete reader;
+        return;
+    }
+    unsigned char *data = ::Zoom(reader->GetImData(),
+                        reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                        rationX, rationY);
+    if (data) {
+        size_t new_w = reader->GetImWidth() * rationX + 0.5;
+        size_t new_h = reader->GetImHeight() * rationY + 0.5;
+        size_t dims[3] = {new_w, new_h, reader->GetImSlice()};
+        MHDWriter *writer = new MHDWriter(output);
+        writer->SetImgData(data,dims);
+        writer->WriteFile(output);
+        delete writer;
+        delete data;
     }
     delete reader;
 }

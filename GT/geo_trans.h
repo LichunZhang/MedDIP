@@ -10,6 +10,7 @@
 #include <cstddef>
 #include <cstring>
 #include <climits>
+#include <limits>
 //#include <limits>
 
 /**!
@@ -243,6 +244,43 @@ bool Transpose(T *im, size_t width, size_t height, size_t slice) {
     delete[] new_im;
     return true;
 }
+
+/**!
+ * @brief 图像缩放
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param rationX x轴方向缩放比例
+ * @param rationY y轴方向缩放比例
+ * @return 操作是否成功
+ */
+template<typename T>
+T *Zoom(T *im, size_t width, size_t height, size_t slice,
+        float rationX, float rationY) {
+    if (!im) return nullptr;
+    size_t new_w = width * rationX + 0.5;
+    size_t new_h = height * rationY + 0.5;
+    T *new_im = new T[new_w * new_h * slice];
+    if (!new_im) return nullptr;
+    for (size_t k = 0; k < slice; ++k) {
+        int p0 = k * width * height, p1 = k * new_w * new_h;
+        int i0 = 0, j0 = 0;
+        for (size_t i = 0; i < new_h; ++i) {
+            for (size_t j = 0; j < new_w; ++j) {
+                i0 = i / rationY + 0.5;
+                j0 = j / rationX + 0.5;
+                if ((j0 >= 0) && (j0 < width) && (i0 >= 0) && (i0 < height))
+                    new_im[p1 + i * new_w + j] = im[p0 + i0 * width + j0];
+                else
+                    new_im[p1 + i * new_w + j] = 0;
+            }
+        }
+    }
+    return new_im;
+}
+
 void Rotate(void *im, size_t width, size_t height, size_t slice, int angle);
 
 #endif //DIP_GEOTRANS_H
