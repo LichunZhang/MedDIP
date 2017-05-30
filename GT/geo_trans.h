@@ -208,7 +208,7 @@ bool Mirror2(T *im, size_t width, size_t height, size_t slice, bool drt) {
                 memcpy(new_im, &im[p0 + i * width], sizeof(T) * width);
                 // 倒数第i行
                 memcpy(&im[p0 + i * width], &im[p0 + (height - 1 - i) * width], sizeof(T) * width);
-                memcpy(&im[p0 + (height - 1 - i)*width], new_im, sizeof(T) * width);
+                memcpy(&im[p0 + (height - 1 - i) * width], new_im, sizeof(T) * width);
             }
         }
         delete[] new_im;
@@ -216,6 +216,33 @@ bool Mirror2(T *im, size_t width, size_t height, size_t slice, bool drt) {
     return true;
 }
 
+/**!
+ * @brief 图像转置变换 利用位置关系 图像长宽会调换
+ * new_im[y，x] = im[x,y]
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @return 是否操作成功
+ */
+template<typename T>
+bool Transpose(T *im, size_t width, size_t height, size_t slice) {
+    if (!im) return false;
+    T *new_im = new T[width * height];
+    if (!new_im) return false;
+    for (size_t k = 0; k < slice; ++k) {
+        int p0 = k * width * height;
+        for (size_t i = 0; i < height; ++i) {
+            for (size_t j = 0; j < width; ++j) {
+                new_im[j * height + i] = im[p0 + i * width + j];
+            }
+        }
+        memcpy(&im[p0], new_im, sizeof(T) * width * height);
+    }
+    delete[] new_im;
+    return true;
+}
 void Rotate(void *im, size_t width, size_t height, size_t slice, int angle);
 
 #endif //DIP_GEOTRANS_H

@@ -7,17 +7,19 @@
 
 #include <iostream>
 #include <mhd_reader.h>
+#include <mhd_writer.h>
 #include "geo_trans.h"
 
 void GetTransParameters(size_t &offsetX, size_t &offsetY, bool &type);
 
 void TestTranslation(const char *input, const char *output,
-                     size_t offsetX, size_t offsetY,
-                     bool type);
+                     size_t offsetX, size_t offsetY, bool type);
 
 void GetMirrorParameters(bool &direction, bool &type);
 
 void TestMirror(const char *input, const char *output, bool direction, bool type);
+
+void TestTranspose(const char *input, const char *output);
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -26,8 +28,9 @@ int main(int argc, char *argv[]) {
     }
     std::cout << "Functions:\n"
               << "1: Translation\n"
-              << "2: Mirror\n";
-    auto index = 0;
+              << "2: Mirror\n"
+              << "3: Transpose\n";
+    int index = 0;
     std::cin >> index;
     switch (index) {
         case 1: {
@@ -41,6 +44,10 @@ int main(int argc, char *argv[]) {
             bool t = 0, drt = 0;
             GetMirrorParameters(drt, t);
             TestMirror(argv[1], argv[2], drt, t);
+            break;
+        }
+        case 3: {
+            TestTranspose(argv[1], argv[2]);
             break;
         }
         default:
@@ -110,5 +117,31 @@ void TestMirror(const char *input, const char *output, bool direction, bool type
                          direction);
     if (flag)
         reader->Write(output);
+    delete reader;
+}
+
+void TestTranspose(const char *input, const char *output) {
+
+    MHDReader *reader = new MHDReader(input);
+    if (!reader->GetImData()) {
+        std::cout << "Read input failed!\n";
+        delete reader;
+        return;
+    }
+
+    bool flag = false;
+    flag = ::Transpose(reader->GetImData(),
+                       reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
+    if (flag) {
+        MHDWriter *writer = new MHDWriter(output);
+        size_t dims[3] = {reader->GetImHeight(), reader->GetImWidth(), reader->GetImSlice()};
+//        size_t* dims = new size_t[3];
+//        dims[0] =reader->GetImHeight();
+//        dims[1] =reader->GetImWidth();
+//        dims[2] = reader->GetImSlice();
+        writer->SetImgData(reader->GetImData(), dims);
+        writer->WriteFile(output);
+        delete writer;
+    }
     delete reader;
 }
