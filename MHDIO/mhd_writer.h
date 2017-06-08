@@ -20,8 +20,23 @@ public:
     void WriteFile(const char *name);
 
     template<typename T>
-    void SetImgData(const void *data, const size_t *dims, const double *spacing = nullptr,
-                    const std::string type = "");
+    void SetImgData(const T *data, const size_t *dims, const double *spacing = nullptr,
+                    const std::string type = "") {
+        if (!data || !dims) return;
+
+        //Set image info
+        SetImgDims(dims);
+        if (!spacing) SetImgSpacing(spacing);
+        if (!type.empty()) SetImgType(type);
+        if (std::is_same<T, unsigned char>::value)
+            _dataType = "MET_UCHAR";
+//    else if(std::is_same<T,unsigned short>::value)
+//        _dataType="MET_USHORT";
+        //Set image data
+        if (_imData) delete[] _imData;
+        _imData = new T[_dimX * _dimY * _dimZ];
+        memcpy(_imData, data, sizeof(T) * _dimX * _dimY * _dimZ);
+    }
 
 private:
     void SetImgDims(const size_t *dims) {

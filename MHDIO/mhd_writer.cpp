@@ -13,25 +13,6 @@ MHDWriter::MHDWriter(const char *name/* = nullptr*/) : MHD_IO(name) {}
 
 MHDWriter::~MHDWriter() {}
 
-template<typename T>
-void MHDWriter::SetImgData(const void *data, const size_t *dims, const double *spacing/* = nullptr*/,
-                           const std::string type /* = ""*/) {
-    if (!data || !dims) return;
-
-    //Set image info
-    SetImgDims(dims);
-    if (!spacing) SetImgSpacing(spacing);
-    if (!type.empty()) SetImgType(type);
-    if (std::is_same<T, unsigned char>::value)
-        _dataType = "MET_UCHAR";
-//    else if(std::is_same<T,unsigned short>::value)
-//        _dataType="MET_USHORT";
-
-    //Set image data
-    if (_imData) delete[] _imData;
-    _imData = new T[_dimX * _dimY * _dimZ];
-    memcpy(_imData, data, sizeof(T) * _dimX * _dimY * _dimZ);
-}
 
 /**
  * @brief 输出mhd图像文件
@@ -53,10 +34,16 @@ void MHDWriter::WriteFile(const char *name) {
 //    ElementType = MET_UCHAR
 //    ElementDataFile = abell5mm_reorder.raw
     if (!name) return;
-    _fileName = name;
+    std::string name_str = name;
+    auto index = name_str.find_last_of(".");
+    if(index == std::string::npos)
+        name_str += ".mhd";
+    else
+        name_str = name_str.substr(0,index+1)+"mhd";
+    _fileName = name_str;
     if (!_imData || _dataType.empty() || !_dimY || !_dimY || !_dimZ)
         return;
-    WriteHeader(name);
+    WriteHeader(_fileName.c_str());
     std::string str_raw_name = _fileName.substr(0, _fileName.find_last_of(".") + 1);
     str_raw_name += "raw";
     WriteRaw(str_raw_name.c_str());
