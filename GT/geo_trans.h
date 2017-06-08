@@ -10,7 +10,8 @@
 #include <cstddef>
 #include <cstring>
 #include <climits>
-#include <limits>
+//#include <limits>
+#include <cmath>
 //#include <limits>
 
 /**!
@@ -246,15 +247,15 @@ bool Transpose(T *im, size_t width, size_t height, size_t slice) {
 }
 
 /**!
- * @brief 图像缩放
+ * @brief 图像缩放 利用源和新图映射关系 new[i,j] = im[i/rationx,J/rationY]
  * @tparam T 源图像数据类型
  * @param im 源图像指针
  * @param width 源图像宽度(像素)
  * @param height 源图像高度(像素)
  * @param slice 源图像切片数
- * @param rationX x轴方向缩放比例
- * @param rationY y轴方向缩放比例
- * @return 操作是否成功
+ * @param rationX
+ * @param rationY
+ * @return 返回缩放后的图像 大小有变化
  */
 template<typename T>
 T *Zoom(T *im, size_t width, size_t height, size_t slice,
@@ -281,6 +282,82 @@ T *Zoom(T *im, size_t width, size_t height, size_t slice,
     return new_im;
 }
 
-void Rotate(void *im, size_t width, size_t height, size_t slice, int angle);
+/// \brief 图像旋转 利用了新图与源图的映射关系 改变图像大小
+/// \tparam T 源图像数据类型
+/// \param im 源图像指针
+/// \param width 源图像宽（像素）
+/// \param height 源图像高（像素）
+/// \param slice 源图像切片数
+/// \param angle 旋转角度
+/// \param new_w 新图像宽度（像素）
+/// \param new_h 新图像高度（像素）
+/// \return 新图像指针
+
+template<typename T>
+T *Rotate(T *im, size_t width, size_t height, size_t slice, int angle,
+          size_t &new_w, size_t &new_h) {
+    if (!im) return nullptr;
+
+    double sin_angle = sin(angle);
+    double cos_angle = cos(angle);
+
+    // 原图4个角坐标(图像中心为坐标原点)
+    double pt_src1X = -(double) (width - 1) / 2;
+    double pt_src1Y = (double) (height - 1) / 2;
+    double pt_src2X = (double) (width - 1) / 2;
+    double pt_src2Y = (double) (height - 1) / 2;
+    double pt_src3X = -(double) (width - 1) / 2;
+    double pt_src3Y = -(double) (height - 1) / 2;
+    double pt_src4X = (double) (width - 1) / 2;
+    double pt_src4Y = -(double) (height - 1) / 2;
+
+    // 新图4个角坐标(图像中心坐标原点)
+    double pt_dst1X = cos_angle * pt_src1X + sin_angle * pt_src1Y;
+    double pt_dst1Y = -sin_angle * pt_src1X + cos_angle * pt_src1Y;
+    double pt_dst2X = cos_angle * pt_src2X + sin_angle * pt_src2Y;
+    double pt_dst2Y = -sin_angle * pt_src2X + cos_angle * pt_src2Y;
+    double pt_dst3X = cos_angle * pt_src3X + sin_angle * pt_src3Y;
+    double pt_dst3Y = -sin_angle * pt_src3X + cos_angle * pt_src3Y;
+    double pt_dst4X = cos_angle * pt_src4X + sin_angle * pt_src4Y;
+    double pt_dst4Y = -sin_angle * pt_src4X + cos_angle * pt_src4Y;
+
+    // 新图像宽度和高度
+    new_w = fmax(fabs(pt_dst4X - pt_dst1X), fabs(pt_dst3X - pt_dst2X)) + 1.5;
+    new_h = fmax(fabs(pt_dst4Y - pt_dst1Y), fabs(pt_dst3Y - pt_dst2Y)) + 1.5;
+
+    // 以图左上角为原点
+    // x0=x1cosθ+y1sinθ-ccosθ-dsinθ+a
+    // y0=-x1sinθ+y1cosθ+csinθ-dcosθ+b
+    // a=(width-1)/2, b=(height-1)/2
+    // c=(new_w-1)/2, d=(new_h-1)/2
+
+    // f1=-cosθ-dsinθ+a --> x0=x1cosθ+y1sinθ+f1
+    // f2=csinθ-dcosθ+b --> y0=-x1sinθ+y1cosθ+f2
+
+    double f1 = double(-0.5 * (new_w - 1) * cos_angle -
+                       0.5 * (new_h - 1) * sin_angle + 0.5 * (width - 1));
+    double f2 = double(0.5 * (new_w - 1) * sin_angle -
+                       0.5 * (new_h - 1) * cos_angle + 0.5 * (height - 1));
+
+    T *new_im = new T[slice * new_w * new_h];
+    // i0->y0,j0->x0
+    int i0 = 0, j0 = 0;
+
+    int p1 = new_w * new_h, p0 = width * height;
+    for (size_t k = 0; k < slice; ++k) {
+        for (size_t i = 0; i < new_h; ++i) {
+            for (size_t j = 0; j < new_w; ++j) {
+                i0 = -(double)j * sin_angle + (double)i * cos_angle + f2 + 0.5;
+                j0 = (double)j * cos_angle + (double)i * sin_angle + f1 + 0.5;
+                if ((i0 >= 0) && (i0 < height) && (j0 >= 0) && (j0 < width))
+                    new_im[k * p1 + i * new_w + j] = im[k * p0 + i0 * width + j0];
+                else
+                    new_im[k * p1 + i * new_w + j] = 0;
+            }
+        }
+    }
+    return new_im;
+
+}
 
 #endif //DIP_GEOTRANS_H
