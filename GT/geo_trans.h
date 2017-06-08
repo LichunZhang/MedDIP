@@ -1,6 +1,8 @@
 // Program: DIP
 // FileName:geotrans.h
 // Author:  Lichun Zhang
+// Brief:   Image geometry transformations including translation,mirror,
+//          transpose,zoom,rotate.
 // Date:    2017/4/18 下午1:06
 // Copyright (c) 2017 Lichun Zhang. All rights reserved.
 
@@ -10,9 +12,7 @@
 #include <cstddef>
 #include <cstring>
 #include <climits>
-//#include <limits>
 #include <cmath>
-//#include <limits>
 
 /**!
  * @brief 平移图像 基于目标图像源图像的像素点位置关系 逐点运算
@@ -282,7 +282,7 @@ T *Zoom(T *im, size_t width, size_t height, size_t slice,
     return new_im;
 }
 
-/// \brief 图像旋转 利用了新图与源图的映射关系 改变图像大小
+/// \brief 图像旋转(最近邻插值) 利用了新图与源图的映射关系 改变图像大小
 /// \tparam T 源图像数据类型
 /// \param im 源图像指针
 /// \param width 源图像宽（像素）
@@ -325,6 +325,9 @@ T *Rotate(T *im, size_t width, size_t height, size_t slice, int angle,
     new_w = fmax(fabs(pt_dst4X - pt_dst1X), fabs(pt_dst3X - pt_dst2X)) + 1.5;
     new_h = fmax(fabs(pt_dst4Y - pt_dst1Y), fabs(pt_dst3Y - pt_dst2Y)) + 1.5;
 
+    T *new_im = new T[slice * new_w * new_h];
+    if (!new_im) return nullptr;
+
     // 以图左上角为原点
     // x0=x1cosθ+y1sinθ-ccosθ-dsinθ+a
     // y0=-x1sinθ+y1cosθ+csinθ-dcosθ+b
@@ -338,17 +341,14 @@ T *Rotate(T *im, size_t width, size_t height, size_t slice, int angle,
                        0.5 * (new_h - 1) * sin_angle + 0.5 * (width - 1));
     double f2 = double(0.5 * (new_w - 1) * sin_angle -
                        0.5 * (new_h - 1) * cos_angle + 0.5 * (height - 1));
-
-    T *new_im = new T[slice * new_w * new_h];
     // i0->y0,j0->x0
     int i0 = 0, j0 = 0;
-
     int p1 = new_w * new_h, p0 = width * height;
     for (size_t k = 0; k < slice; ++k) {
         for (size_t i = 0; i < new_h; ++i) {
             for (size_t j = 0; j < new_w; ++j) {
-                i0 = -(double)j * sin_angle + (double)i * cos_angle + f2 + 0.5;
-                j0 = (double)j * cos_angle + (double)i * sin_angle + f1 + 0.5;
+                i0 = -(double) j * sin_angle + (double) i * cos_angle + f2 + 0.5;
+                j0 = (double) j * cos_angle + (double) i * sin_angle + f1 + 0.5;
                 if ((i0 >= 0) && (i0 < height) && (j0 >= 0) && (j0 < width))
                     new_im[k * p1 + i * new_w + j] = im[k * p0 + i0 * width + j0];
                 else
@@ -358,6 +358,113 @@ T *Rotate(T *im, size_t width, size_t height, size_t slice, int angle,
     }
     return new_im;
 
+}
+
+/**
+ * @brief 双线性插值
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param x 插值元素x坐标
+ * @param y 插值元素y坐标
+ * @return 插值计算结果
+ */
+template<typename T>
+T BilinearInterpolation(T *im, size_t width, size_t height, size_t slice,
+                        double x, double y, int z) {
+    if ((x < 0) || (x >= width) || (y < 0) || (y >= height) || (z < 0) || (z >= slice)) return 0;
+    // 计算4个最邻近插值元素的坐标
+    size_t i1 = y;
+//    size_t i2 = y + 1;
+    size_t j1 = x;
+//    size_t j2 = x + 1;
+
+    auto p = z * width * height + i1 * width + j1;
+    // 根据公式:f(x,y) = f(x,0)+y*[f(x,1)-f(x,0)]    (0<x<1,0<y<1)
+    // 其中    f(x,0) = f(0,0)+ x*[f(1,0)-f(0,0)]
+    //        f(x,1) = f(0,1) + x*[f(1,1)-f(0,1)]
+    // 计算4个最近邻像素值
+    T f1 = im[p] + (x - j1) * (im[p + width] - im[p]);   //f(x,0)
+    T f2 = im[p + 1] + (x - j1) * (im[p + width + 1] - im[p + 1]);   //f(x,1)
+    return f1 + (y - i1) * (f2 - f1);
+
+}
+
+
+/**
+ * @brief 图像旋转2(双线性插值)
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param angle 旋转角度
+ * @param new_w 新图像宽度
+ * @param new_h 新图像高度
+ * @return 新图像指针
+ */
+template<typename T>
+T *Rotate2(T *im, size_t width, size_t height, size_t slice, int angle,
+           size_t &new_w, size_t &new_h) {
+    if (!im) return nullptr;
+    double sin_angle = sin(angle);
+    double cos_angle = cos(angle);
+
+    // 原图4个角坐标(图像中心为坐标原点)
+    double pt_src1X = -(double) (width - 1) / 2;
+    double pt_src1Y = (double) (height - 1) / 2;
+    double pt_src2X = (double) (width - 1) / 2;
+    double pt_src2Y = (double) (height - 1) / 2;
+    double pt_src3X = -(double) (width - 1) / 2;
+    double pt_src3Y = -(double) (height - 1) / 2;
+    double pt_src4X = (double) (width - 1) / 2;
+    double pt_src4Y = -(double) (height - 1) / 2;
+
+    // 新图4个角坐标(图像中心坐标原点)
+    double pt_dst1X = cos_angle * pt_src1X + sin_angle * pt_src1Y;
+    double pt_dst1Y = -sin_angle * pt_src1X + cos_angle * pt_src1Y;
+    double pt_dst2X = cos_angle * pt_src2X + sin_angle * pt_src2Y;
+    double pt_dst2Y = -sin_angle * pt_src2X + cos_angle * pt_src2Y;
+    double pt_dst3X = cos_angle * pt_src3X + sin_angle * pt_src3Y;
+    double pt_dst3Y = -sin_angle * pt_src3X + cos_angle * pt_src3Y;
+    double pt_dst4X = cos_angle * pt_src4X + sin_angle * pt_src4Y;
+    double pt_dst4Y = -sin_angle * pt_src4X + cos_angle * pt_src4Y;
+
+    // 新图像宽度和高度
+    new_w = fmax(fabs(pt_dst4X - pt_dst1X), fabs(pt_dst3X - pt_dst2X)) + 1.5;
+    new_h = fmax(fabs(pt_dst4Y - pt_dst1Y), fabs(pt_dst3Y - pt_dst2Y)) + 1.5;
+
+    T *new_im = new T[slice * new_w * new_h];
+    if (!new_im) return nullptr;
+    // 以图左上角为原点
+    // x0=x1cosθ+y1sinθ-ccosθ-dsinθ+a
+    // y0=-x1sinθ+y1cosθ+csinθ-dcosθ+b
+    // a=(width-1)/2, b=(height-1)/2
+    // c=(new_w-1)/2, d=(new_h-1)/2
+
+    // f1=-cosθ-dsinθ+a --> x0=x1cosθ+y1sinθ+f1
+    // f2=csinθ-dcosθ+b --> y0=-x1sinθ+y1cosθ+f2
+
+    double f1 = double(-0.5 * (new_w - 1) * cos_angle -
+                       0.5 * (new_h - 1) * sin_angle + 0.5 * (width - 1));
+    double f2 = double(0.5 * (new_w - 1) * sin_angle -
+                       0.5 * (new_h - 1) * cos_angle + 0.5 * (height - 1));
+    // i0->y0,j0->x0
+    int i0 = 0, j0 = 0;
+//    int p1 = new_w * new_h, p0 = width * height;
+    for (size_t k = 0; k < slice; ++k) {
+        for (size_t i = 0; i < new_h; ++i) {
+            for (size_t j = 0; j < new_w; ++j) {
+                i0 = -(double) j * sin_angle + (double) i * cos_angle + f2 + 0.5;
+                j0 = (double) j * cos_angle + (double) i * sin_angle + f1 + 0.5;
+                new_im[k * new_w * new_h + i * new_w + j] =
+                        BilinearInterpolation(im, width, height, slice, j0, i0,k);
+            }
+        }
+    }
+    return new_im;
 }
 
 #endif //DIP_GEOTRANS_H

@@ -126,12 +126,14 @@ void TestZoom(const char *input, const char *output, float rationX, float ration
     delete reader;
 }
 
-void GetRotateParameters(double &angle) {
+void GetRotateParameters(double &angle, bool &type) {
     std::cout << "Please enter the angle:\n";
     std::cin >> angle;
+    std::cout << "Please enter the type of method (0 or 1):\n";
+    std::cin >> type;
 }
 
-void TestRotate(const char *input, const char *output, double angle) {
+void TestRotate(const char *input, const char *output, double angle, bool type = 1) {
     MHDReader *reader = new MHDReader(input);
     if (!reader->GetImData()) {
         std::cout << "Read input failed!\n";
@@ -140,9 +142,15 @@ void TestRotate(const char *input, const char *output, double angle) {
     }
 
     size_t new_w = 0, new_h = 0;
-    unsigned char *data = ::Rotate(reader->GetImData(),
-                                   reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
-                                   angle, new_w, new_h);
+    unsigned char *data = nullptr;
+    if (type == 0)
+        data = ::Rotate(reader->GetImData(),
+                        reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                        angle, new_w, new_h);
+    else
+        data = ::Rotate2(reader->GetImData(),
+                         reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                         angle, new_w, new_h);
     if (data) {
         size_t dims[3] = {new_w, new_h, reader->GetImSlice()};
         MHDWriter *writer = new MHDWriter(output);
@@ -193,8 +201,9 @@ int main(int argc, char *argv[]) {
         }
         case 5: {
             double angle = 0.0;
-            GetRotateParameters(angle);
-            TestRotate(argv[1], argv[2], angle);
+            bool type;
+            GetRotateParameters(angle, type);
+            TestRotate(argv[1], argv[2], angle, type);
         }
         default:
             break;
