@@ -108,7 +108,7 @@ void MHDReader::ConstructData(std::string type, FILE *fp) {
 }
 
 // name without suffix
-void MHDReader::Write(const char *name) {
+void MHDReader::SaveAs(const char *name) {
 	size_t dims[] = {_dimX,_dimY,_dimZ};
 	double spacing[] = {_spacingX,_spacingY,_spacingZ};
 	WriteMHD(name, _imData, dims, spacing);

@@ -47,7 +47,7 @@ void TestFFT(const char *input, const char *output) {
             ::Fourier(reader->GetImData(),
                       reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
     if (flag)
-        reader->Write(output);
+        reader->SaveAs(output);
     delete reader;
 }
 
@@ -61,6 +61,6 @@ void TestDCT(const char *input, const char *output) {
     bool flag =
             ::DiscretCosin(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
     if (flag)
-        reader->Write(output);
+        reader->SaveAs(output);
     delete reader;
 }
