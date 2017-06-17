@@ -8,7 +8,7 @@
 #include <iostream>
 #include <mhd_reader.h>
 #include <mhd_writer.h>
-#include "geo_trans.h"
+#include "geometry_trans.h"
 
 void GetTransParameters(size_t &offsetX, size_t &offsetY, bool &type) {
     std::cout << "Please enter the translation parameters:\n"
