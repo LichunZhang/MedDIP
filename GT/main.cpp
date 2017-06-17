@@ -8,7 +8,7 @@
 #include <iostream>
 #include <mhd_reader.h>
 #include <mhd_writer.h>
-#include "geo_trans.h"
+#include "geometry_trans.h"
 
 void GetTransParameters(size_t &offsetX, size_t &offsetY, bool &type) {
     std::cout << "Please enter the translation parameters:\n"
@@ -42,7 +42,7 @@ void TestTranslation(const char *input, const char *output,
                               reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
                               offsetX, offsetY);
     if (flag)
-        reader->Write(output);
+        reader->SaveAs(output);
     delete reader;
 }
 
@@ -70,7 +70,7 @@ void TestMirror(const char *input, const char *output, bool direction, bool type
                          reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
                          direction);
     if (flag)
-        reader->Write(output);
+        reader->SaveAs(output);
     delete reader;
 }
 

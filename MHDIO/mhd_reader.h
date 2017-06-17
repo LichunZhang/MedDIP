@@ -18,7 +18,7 @@ public:
     virtual ~MHDReader();
 
     void ReadFile(const char* name);
-    void Write(const char* name);
+    void SaveAs(const char *name);
 
 private:
     std::string _raw_name;

@@ -8,9 +8,34 @@
 #include <iostream>
 #include "ortho_trans.h"
 
-void TestFFT(const char *input, const char *output);
+void TestFFT(const char *input, const char *output) {
+    MHDReader *reader = new MHDReader(input);
+    if (!reader->GetImData()) {
+        std::cout << "Read input failed!\n";
+        delete reader;
+        return;
+    }
+    bool flag =
+            ::Fourier(reader->GetImData(),
+                      reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
+    if (flag)
+        reader->SaveAs(output);
+    delete reader;
+}
 
-void TestDCT(const char *input, const char *output);
+void TestDCT(const char *input, const char *output) {
+    MHDReader *reader = new MHDReader(input);
+    if (!reader->GetImData()) {
+        std::cout << "Read input failed!\n";
+        delete reader;
+        return;
+    }
+    bool flag =
+            ::DiscretCosin(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
+    if (flag)
+        reader->SaveAs(output);
+    delete reader;
+}
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -36,31 +61,4 @@ int main(int argc, char *argv[]) {
 
 }
 
-void TestFFT(const char *input, const char *output) {
-    MHDReader *reader = new MHDReader(input);
-    if (!reader->GetImData()) {
-        std::cout << "Read input failed!\n";
-        delete reader;
-        return;
-    }
-    bool flag =
-            ::Fourier(reader->GetImData(),
-                      reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
-    if (flag)
-        reader->Write(output);
-    delete reader;
-}
 
-void TestDCT(const char *input, const char *output) {
-    MHDReader *reader = new MHDReader(input);
-    if (!reader->GetImData()) {
-        std::cout << "Read input failed!\n";
-        delete reader;
-        return;
-    }
-    bool flag =
-            ::DiscretCosin(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
-    if (flag)
-        reader->Write(output);
-    delete reader;
-}

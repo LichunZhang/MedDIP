@@ -2,7 +2,7 @@ PROJECT(TemplateTrans)
 cmake_minimum_required(VERSION 2.8)
 SET(CMAKE_CXX_STANDARD 11)
 
-SET(SOURCE_FILES template_trans.h template_trans.cpp)
+SET(SOURCE_FILES template_trans.h main.cpp)
 INCLUDE_DIRECTORIES(../MHDIO)
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR})
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
