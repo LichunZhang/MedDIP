@@ -66,23 +66,23 @@ bool Template(T *im, size_t width, size_t height, size_t slice,
     T *lp_src = nullptr;
     for (int k = 0; k < slice; ++k) {
         memcpy(new_im, im + k * width * height, width * height * sizeof(T));
-        double result = 0.0;
-        for (int j = filterCY; j < height - filterH + filterCY + 1; ++j) {
-            for (int i = filterCX; i < width - filterW + filterCX + 1; ++i) {
+        for (int i = filterCY; i < height - filterH + filterCY + 1; ++i) {
+            for (int j = filterCX; j < width - filterW + filterCX + 1; ++j) {
                 // 指向原图像滤波模版开始处
-                lp_src = im + k * height * width + (j - filterCY) * width +
-                         i - filterCX;
+                double result = 0.0;
+                lp_src = im + k * height * width + (i - filterCY) * width +
+                         j - filterCX;
                 // 模版覆盖区计算
                 for (int l = 0; l < filterH; ++l) {
                     for (int m = 0; m < filterW; ++m) {
-                        result += (*(lp_src + l * width + m)) * para_array[l * filterW + m];
+                        result += (double) (*(lp_src + l * width + m)) * para_array[l * filterW + m];
                     }
                 }
                 result *= coeff;
                 result = result > std::numeric_limits<T>::max()
                          ? std::numeric_limits<T>::max()
-                         : result;
-                new_im[j * width + i] = result;
+                         : int(result + 0.5);
+                new_im[i * width + j] = result;
             }
         }
         memcpy(im + k * width * height, new_im, width * height * sizeof(T));
