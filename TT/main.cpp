@@ -100,7 +100,7 @@ void TestGradSharp(const char *input, const char *output, int threshold) {
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
-        std::cout << "Parameter error!\n";
+        std::cout << "Usage: inputname outputname\n";
         return 1;
     }
     std::cout << "Functions:\n"

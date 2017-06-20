@@ -1,8 +1,8 @@
-PROJECT(OrthogonalTrans)
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(MorphologyTrans)
+cmake_minimum_required(VERSION 2.8)
 SET(CMAKE_CXX_STANDARD 11)
 
-SET(SOURCE_FILES fft.cpp dct.cpp main.cpp ortho_trans.h ../MT/morphology_trans.h)
+SET(SOURCE_FILES morphology_trans.h main.cpp)
 INCLUDE_DIRECTORIES(../MHDIO)
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR})
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
