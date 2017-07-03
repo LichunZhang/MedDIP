@@ -329,4 +329,161 @@ bool GaussLaplace(T *im, size_t width, size_t height, size_t slice) {
     return true;
 }
 
+/**
+ * @brief 轮廓提取运算 根据8领域 效率较低
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @return 操作是否成功
+ */
+template<typename T>
+bool Contour(T *im, size_t width, size_t height, size_t slice) {
+    if (!im) return false;
+    T *new_im = nullptr;
+    try {
+        new_im = new T[width * height];
+    }
+    catch (std::bad_alloc) {
+        std::cout << "Failed to alloc memory!\n";
+        return false;
+    }
+
+    // 八个方向
+    T n, s, w, e, nw, ne, sw, se;
+    size_t p = 0, t = 0;
+    T max = std::numeric_limits<T>::max();
+    for (size_t k = 0; k < slice; ++k) {
+        // 初始化全为白色
+        memset(new_im, max, sizeof(T) * width * height);
+        p = k * width * height;
+        for (size_t i = 1; i < height - 1; ++i) {
+            for (size_t j = 1; j < width - 1; ++j) {
+                t = p + i * width + j;
+                // 若当前点为黑 统计当前点的八个方向
+                if (im[t] == 0) {
+                    n = im[t - width];
+                    nw = im[t - width - 1];
+                    ne = im[t - width + 1];
+                    s = im[t + width];
+                    sw = im[t + width - 1];
+                    se = im[t + width + 1];
+                    w = im[t - 1];
+                    e = im[t + 1];
+                    // 若不全为黑(边界 非内部点) 则设黑
+                    // 否则全黑(非边界 内部点) 仍然是初始值白
+                    if (n || nw || ne || s || sw || se || w || e)
+                        new_im[i * width + j] = 0;
+                }
+            }
+        }
+        memcpy(im + p, new_im, sizeof(T) * width * height);
+    }
+    delete[] new_im;
+    return true;
+}
+
+
+struct Point2D {
+    double height = 0.0;
+    double width = 0.0;
+};
+
+/**
+ * @brief 图像轮廓跟踪（非0点） 根据“探测准则“
+ * 分8方向 45°一个 从左上开始顺时针 搜到下一个逆时针90° 直到返回开始点
+ * @todo 解决跟踪至边界越界出错的问题
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ */
+template<typename T>
+bool Trace(T *im, size_t width, size_t height, size_t slice) {
+    if (!im) return false;
+    T *new_im = nullptr;
+    try {
+        new_im = new T[width * height];
+    }
+    catch (std::bad_alloc) {
+        std::cout << "Failed to alloc memory!\n";
+        return false;
+    }
+
+    // 8方向
+    int directions[8][2] = {{-1, -1},
+                            {0,  -1},
+                            {1,  -1},
+                            {1,  0},
+                            {1,  1},
+                            {0,  1},
+                            {-1, 1},
+                            {-1, 0}};
+
+    bool findStartPt = false;
+    Point2D startPt;
+    size_t p = 0;
+    T max = std::numeric_limits<T>::max();
+    for (size_t k = 0; k < slice; ++k) {
+        memset(new_im, 0, sizeof(T) * width * height);
+        p = k * width * height;
+
+        findStartPt = false;
+        // 先找最左上方的边界点（非0点）
+        for (size_t i = 1; i < height - 1 && !findStartPt; ++i) {
+            for (size_t j = 1; j < width - 1 && !findStartPt; ++j) {
+                if (im[p + i * width + j] > 0) {
+                    findStartPt = true;
+                    startPt.height = i;
+                    startPt.width = j;
+                    new_im[i * width + height] = max;
+                }
+            }
+        }
+        // 若此slice上无黑点 直接下一个slice
+        if (!findStartPt) continue;
+
+        // 初始方向为左上
+        int direct = 0;
+        Point2D currentPt;
+        currentPt.height = startPt.height;
+        currentPt.width = startPt.width;
+        findStartPt = false;
+        bool findBlackPt = false;
+        while (!findStartPt) {
+            findBlackPt = false;
+            while (!findBlackPt) {
+                size_t t = p + (currentPt.height + directions[direct][1]) * width +
+                           currentPt.width + directions[direct][0];
+                // 如果搜索方向上出现白点
+                if (im[t] > 0) {
+                    findBlackPt = true;
+                    // 当前点移到搜索到的点上
+                    currentPt.height += directions[direct][1];
+                    currentPt.width += directions[direct][0];
+                    // 判断是否回到最初搜索点上
+                    if (currentPt.height == startPt.height && currentPt.width == startPt.width)
+                        findStartPt = true;
+                    // 设置目标图像当前点为白色
+                    t = currentPt.height * width + currentPt.width;
+                    new_im[t] = max;
+                    // 扫描方向逆时针旋转两格(90°)
+                    direct -= 2;
+                    if (direct == -2) direct = 6;
+                    else if (direct == -1) direct = 7;
+                } else {  //搜索方向无白色 顺时针1格(45°)
+                    ++direct;
+                    if (direct == 8) direct = 0;
+                }
+            }
+        }
+
+        memcpy(im + p, new_im, sizeof(T) * width * height);
+    }
+    delete[] new_im;
+    return true;
+}
+
 #endif //DIP_EDGECONTOUR_DETECT_H

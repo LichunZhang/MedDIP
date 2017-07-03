@@ -26,8 +26,7 @@ int TestErosion(const char *input, const char *output, int mode = 0,
         reader->SaveAs(output);
         delete reader;
         return 0;
-    }
-    else {
+    } else {
         delete reader;
         return -1;
     }
@@ -67,8 +66,7 @@ int TestOpen(const char *input, const char *output, int mode = 0,
         reader->SaveAs(output);
         delete reader;
         return 0;
-    }
-    else {
+    } else {
         delete reader;
         return -1;
     }
@@ -90,8 +88,7 @@ int TestClose(const char *input, const char *output, int mode = 0,
         reader->SaveAs(output);
         delete reader;
         return 0;
-    }
-    else {
+    } else {
         delete reader;
         return -1;
     }
@@ -106,13 +103,12 @@ int TestThining(const char *input, const char *output) {
     }
     bool flag =
             ::Thining(reader->GetImData(), reader->GetImWidth(),
-                    reader->GetImHeight(), reader->GetImSlice());
+                      reader->GetImHeight(), reader->GetImSlice());
     if (flag) {
         reader->SaveAs(output);
         delete reader;
         return 0;
-    }
-    else {
+    } else {
         delete reader;
         return -1;
     }
@@ -145,7 +141,7 @@ int main(int argc, char *argv[]) {
         case 3:
             return TestClose(argv[1], argv[2], 2, structure, 3);
         case 4:
-            return TestThining(argv[1],argv[2]);
+            return TestThining(argv[1], argv[2]);
         default:
             return 1;
     }
