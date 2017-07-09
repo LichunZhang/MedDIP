@@ -12,6 +12,7 @@
 #include <iostream>
 #include <cmath>
 #include <template_trans.h>
+#include <stack>
 
 /**
  * @brief 用Robert边缘检测算子对图像进行边缘检测。目标图像为灰度图像。
@@ -491,6 +492,11 @@ bool Trace(T *im, size_t width, size_t height, size_t slice) {
 struct Seed {
     int height;
     int width;
+
+    Seed(int h, int w) {
+        height = h;
+        width = w;
+    }
 };
 
 
@@ -509,60 +515,37 @@ template<typename T>
 bool Fill(T *im, size_t width, size_t height, size_t slice,
           size_t pos_x, size_t pos_y, int threshold) {
     if (!im) return false;
-    Seed *seeds = nullptr;
-    try {
-        seeds = new Seed[width * height];
-    }
-    catch (std::bad_alloc) {
-        std::cout << "Failed to alloc memory!\n";
-        return false;
-    }
 
-    int index_pt;
+    std::stack<Seed> seeds;
     int current_x = 0, current_y = 0;
     size_t p = 0, t = 0;
     for (size_t k = 0; k < slice; ++k) {
         p = k * width * height;
-        seeds[1].height = pos_y;
-        seeds[1].width = pos_x;
-        index_pt = 1;
-        while (index_pt != 0) {
+        seeds.push(Seed(pos_y, pos_x));
+        while (!seeds.empty()) {
             // 取出种子
-            current_x = seeds[index_pt].width;
-            current_y = seeds[index_pt].height;
-            --index_pt;
+            current_y = seeds.top().height;
+            current_x = seeds.top().width;
+            seeds.pop();
             // 将当前点涂黑
             t = p + current_y * width + current_x;
             im[t] = 0;
 
             // 判断上下4领域四点是否大于阈值，若是则压入堆栈，注意防止越界
             // 左
-            if (current_x > 0 && im[t - 1] > threshold) {
-                ++index_pt;
-                seeds[index_pt].width = current_x - 1;
-                seeds[index_pt].height = current_y;
-            }
+            if (current_x > 0 && im[t - 1] > threshold)
+                seeds.push(Seed(current_y, current_x - 1));
             // 右
-            if (current_x < width - 1 && im[t + 1] > threshold) {
-                ++index_pt;
-                seeds[index_pt].width = current_x + 1;
-                seeds[index_pt].height = current_y;
-            }
+            if (current_x < width - 1 && im[t + 1] > threshold)
+                seeds.push(Seed(current_y, current_x + 1));
             // 上
-            if (current_y > 0 && im[t - width] > threshold) {
-                ++index_pt;
-                seeds[index_pt].width = current_x;
-                seeds[index_pt].height = current_y - 1;
-            }
+            if (current_y > 0 && im[t - width] > threshold)
+                seeds.push(Seed(current_y - 1, current_x));
             // 下
-            if (current_y < height - 1 && im[t + width] > threshold) {
-                ++index_pt;
-                seeds[index_pt].width = current_x;
-                seeds[index_pt].height = current_y + 1;
-            }
+            if (current_y < height - 1 && im[t + width] > threshold)
+                seeds.push(Seed(current_y + 1, current_x));
         }
     }
-    delete[] seeds;
     return true;
 }
 
@@ -584,26 +567,22 @@ bool Fill2(T *im, size_t width, size_t height, size_t slice,
     if (!im) return false;
 
     // 种子堆栈和指针
-    Seed seeds[10];
-//    std::vector<Seed> seeds;
-
-    int index_pt = 0;
+    std::stack<Seed> seeds;
     int current_x = 0, current_y = 0;       // 当前像素位置
     int buffer_x = 0, buffer_y = 0;
     int x_l = 0, x_r = 0;                   // 左右边界像素位置
     bool fill_r = false, fill_l = false;    // 是否已填充至边界
     size_t p = 0;
+
     for (size_t k = 0; k < slice; ++k) {
         p = k * width * height;
         // 初始化种子
-        seeds[1].height = pos_y;
-        seeds[1].width = pos_x;
-        index_pt = 1;
-        while (index_pt != 0) {
+        seeds.push(Seed(pos_y, pos_x));
+        while (!seeds.empty()) {
             // 取出种子
-            current_x = seeds[index_pt].width;
-            current_y = seeds[index_pt].height;
-            --index_pt;
+            current_x = seeds.top().width;
+            current_y = seeds.top().height;
+            seeds.pop();
             fill_l = fill_r = false;
 
             // 填充种子所在行 保存种子像素位置
@@ -654,31 +633,47 @@ bool Fill2(T *im, size_t width, size_t height, size_t slice,
                 }
             }
 
-            // 上下线扫查看是否全为边界元素或已填充过
+            // 上下线扫查看 若不包含边界元素 也不包含已填充的像素
+            // 则把每一像素端最右像素取出作为种子像素 压入堆栈
+
             // 查看上面的线扫描
             --current_y;
-            if (current_y < 0) {
-                current_y = 0;
-            }
-            for (int i = x_r; i >= x_l; --i) {
-                // 将满足条件未填充的点压入栈中
-                if (im[p + current_y * width + i] > threshold) {
-                    ++index_pt;
-                    seeds[index_pt].height = current_y;
-                    seeds[index_pt].width = i;
-                    break;
+            if (current_y < 0) current_y = 0;
+            bool isSeed = false;    // 判断是否一个像素段中有种子点
+            // 开始在左右边界确定的像素段中找每一段像素段最右边界
+            for (int i = x_l; i <= x_r; ++i) {
+                isSeed = false;
+                while (i < x_r && im[p + current_y * width + i] > threshold) {
+                    isSeed = true;
+                    ++i;
+                }
+                // 说明有种子点 遇到阈值线下点或者到达最右边界
+                if (isSeed) {
+                    // 达最右边界且符合阈值
+                    if (i == x_r && im[p + current_y * width + i] > threshold)
+                        seeds.push(Seed(current_y, i));
+                        // 不符合阈值
+                    else
+                        seeds.push(Seed(current_y, i - 1));
                 }
             }
+
             // 查看下面的线扫描
             current_y += 2;
-            if (current_y >= height)
-                current_y = height - 1;
-            for (int i = x_r; i >= x_l; --i) {
-                if (im[p + current_y * width + i] > threshold) {
-                    ++index_pt;
-                    seeds[index_pt].height = current_y;
-                    seeds[index_pt].width = i;
-                    break;
+            if (current_y >= height) current_y = height - 1;
+            // 开始在左右边界确定的像素段中找每一段像素段最右边界
+            for (int i = x_l; i <= x_r; ++i) {
+                isSeed = false;
+                while (i < x_r && im[p + current_y * width + i] > threshold) {
+                    isSeed = true;
+                    ++i;
+                }
+                // 说明有种子点 遇到阈值线下点或者超最右边界
+                if (isSeed) {
+                    if (i == x_r && im[p + current_y * width + i] > threshold)
+                        seeds.push(Seed(current_y, i));
+                    else
+                        seeds.push(Seed(current_y, i - 1));
                 }
             }
         }

@@ -49,7 +49,7 @@ int TestEdgeDetection(const char *inname, const char *outname, size_t index) {
             break;
         case 7:
             flag = ::Fill(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
-                          reader->GetImWidth() / 2, reader->GetImHeight() / 2, 128);
+                          reader->GetImWidth() / 2, reader->GetImHeight() / 2, 0);
             break;
         case 8:
             flag = ::Fill2(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
