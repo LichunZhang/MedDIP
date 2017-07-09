@@ -46,6 +46,15 @@ int TestEdgeDetection(const char *inname, const char *outname, size_t index) {
         case 6:
             flag = ::Trace(reader->GetImData(), reader->GetImWidth(),
                            reader->GetImHeight(), reader->GetImSlice());
+            break;
+        case 7:
+            flag = ::Fill(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                          reader->GetImWidth() / 2, reader->GetImHeight() / 2, 128);
+            break;
+        case 8:
+            flag = ::Fill2(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                           reader->GetImWidth() / 2, reader->GetImHeight() / 2, 0);
+            break;
         default:
             break;
     }
@@ -74,7 +83,9 @@ int main(int argc, char *argv[]) {
               << "3: Krisch Edge Detection\n"
               << "4: Gaussian Laplace Edge Detection\n"
               << "5: Contour\n"
-              << "6: Trace Contour\n";
+              << "6: Trace Contour\n"
+              << "7: Seed fill\n"
+              << "8: Seed fill 2\n";
     size_t index = 0;
     std::cin >> index;
     return TestEdgeDetection(argv[1], argv[2], index);

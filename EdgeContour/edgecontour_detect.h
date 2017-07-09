@@ -399,6 +399,7 @@ struct Point2D {
  * @param width 源图像宽度(像素)
  * @param height 源图像高度(像素)
  * @param slice 源图像切片数
+ * @return 操作是否成功
  */
 template<typename T>
 bool Trace(T *im, size_t width, size_t height, size_t slice) {
@@ -483,6 +484,205 @@ bool Trace(T *im, size_t width, size_t height, size_t slice) {
         memcpy(im + p, new_im, sizeof(T) * width * height);
     }
     delete[] new_im;
+    return true;
+}
+
+
+struct Seed {
+    int height;
+    int width;
+};
+
+
+/**
+ * @brief 种子填充(漫水) 将种子点联通区域高于阈值的点全部置0
+ * 低效版本, 从种子点开始统计堆栈中点的4领域 符合条件压入堆栈 取出继续
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param threshold 漫水阈值
+ * @return 操作是否成功
+ */
+template<typename T>
+bool Fill(T *im, size_t width, size_t height, size_t slice,
+          size_t pos_x, size_t pos_y, int threshold) {
+    if (!im) return false;
+    Seed *seeds = nullptr;
+    try {
+        seeds = new Seed[width * height];
+    }
+    catch (std::bad_alloc) {
+        std::cout << "Failed to alloc memory!\n";
+        return false;
+    }
+
+    int index_pt;
+    int current_x = 0, current_y = 0;
+    size_t p = 0, t = 0;
+    for (size_t k = 0; k < slice; ++k) {
+        p = k * width * height;
+        seeds[1].height = pos_y;
+        seeds[1].width = pos_x;
+        index_pt = 1;
+        while (index_pt != 0) {
+            // 取出种子
+            current_x = seeds[index_pt].width;
+            current_y = seeds[index_pt].height;
+            --index_pt;
+            // 将当前点涂黑
+            t = p + current_y * width + current_x;
+            im[t] = 0;
+
+            // 判断上下4领域四点是否大于阈值，若是则压入堆栈，注意防止越界
+            // 左
+            if (current_x > 0 && im[t - 1] > threshold) {
+                ++index_pt;
+                seeds[index_pt].width = current_x - 1;
+                seeds[index_pt].height = current_y;
+            }
+            // 右
+            if (current_x < width - 1 && im[t + 1] > threshold) {
+                ++index_pt;
+                seeds[index_pt].width = current_x + 1;
+                seeds[index_pt].height = current_y;
+            }
+            // 上
+            if (current_y > 0 && im[t - width] > threshold) {
+                ++index_pt;
+                seeds[index_pt].width = current_x;
+                seeds[index_pt].height = current_y - 1;
+            }
+            // 下
+            if (current_y < height - 1 && im[t + width] > threshold) {
+                ++index_pt;
+                seeds[index_pt].width = current_x;
+                seeds[index_pt].height = current_y + 1;
+            }
+        }
+    }
+    delete[] seeds;
+    return true;
+}
+
+
+/**
+ * @brief 种子填充 扫描线版 堆栈最小化
+ * 测试对象是一个个像素段 两段以边界值的像素为边界
+ * 每一个像素段只保留最右(左)的像素作为种子像素
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @return 操作是否成功
+ */
+template<typename T>
+bool Fill2(T *im, size_t width, size_t height, size_t slice,
+           size_t pos_x, size_t pos_y, int threshold) {
+    if (!im) return false;
+
+    // 种子堆栈和指针
+    Seed seeds[10];
+//    std::vector<Seed> seeds;
+
+    int index_pt = 0;
+    int current_x = 0, current_y = 0;       // 当前像素位置
+    int buffer_x = 0, buffer_y = 0;
+    int x_l = 0, x_r = 0;                   // 左右边界像素位置
+    bool fill_r = false, fill_l = false;    // 是否已填充至边界
+    size_t p = 0;
+    for (size_t k = 0; k < slice; ++k) {
+        p = k * width * height;
+        // 初始化种子
+        seeds[1].height = pos_y;
+        seeds[1].width = pos_x;
+        index_pt = 1;
+        while (index_pt != 0) {
+            // 取出种子
+            current_x = seeds[index_pt].width;
+            current_y = seeds[index_pt].height;
+            --index_pt;
+            fill_l = fill_r = false;
+
+            // 填充种子所在行 保存种子像素位置
+            buffer_x = current_x;
+            buffer_y = current_y;
+
+            // 向左填充
+            while (!fill_l) {
+                // 若遇到边界
+                if (im[p + current_y * width + current_x] <= threshold) {
+                    fill_l = true;
+                    x_l = current_x + 1;
+                } else {
+                    // 填充
+                    im[p + current_y * width + current_x] = 0;
+                    --current_x;
+                    // 防止越界
+                    if (current_x < 0) {
+                        fill_l = true;
+                        current_x = 0;
+                        x_l = 0;
+                    }
+                }
+            }
+
+            // 向右填充 取回种子像素位置
+            current_x = buffer_x + 1;
+            if (current_x >= width) {
+                fill_r = true;
+                current_x = width - 1;
+                x_r = width - 1;
+            }
+            current_y = buffer_y;
+            while (!fill_r) {
+                // 若遇到边界
+                if (im[p + current_y * width + current_x] <= threshold) {
+                    fill_r = true;
+                    x_r = current_x - 1;
+                } else {
+                    // 填充
+                    im[p + current_y * width + current_x] = 0;
+                    ++current_x;
+                    if (current_x >= width) {
+                        fill_r = true;
+                        current_x = width - 1;
+                        x_r = width - 1;
+                    }
+                }
+            }
+
+            // 上下线扫查看是否全为边界元素或已填充过
+            // 查看上面的线扫描
+            --current_y;
+            if (current_y < 0) {
+                current_y = 0;
+            }
+            for (int i = x_r; i >= x_l; --i) {
+                // 将满足条件未填充的点压入栈中
+                if (im[p + current_y * width + i] > threshold) {
+                    ++index_pt;
+                    seeds[index_pt].height = current_y;
+                    seeds[index_pt].width = i;
+                    break;
+                }
+            }
+            // 查看下面的线扫描
+            current_y += 2;
+            if (current_y >= height)
+                current_y = height - 1;
+            for (int i = x_r; i >= x_l; --i) {
+                if (im[p + current_y * width + i] > threshold) {
+                    ++index_pt;
+                    seeds[index_pt].height = current_y;
+                    seeds[index_pt].width = i;
+                    break;
+                }
+            }
+        }
+    }
     return true;
 }
 
