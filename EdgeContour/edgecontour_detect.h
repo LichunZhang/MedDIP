@@ -16,7 +16,7 @@
 
 /**
  * @brief 用Robert边缘检测算子对图像进行边缘检测。目标图像为灰度图像。
- * g(x,y)=|f(x,y))-f(x+1,y+1)|+|f(x,y+1)-f(x+1,y)|
+ * @note g(x,y)=|f(x,y))-f(x+1,y+1)|+|f(x,y+1)-f(x+1,y)|
  * @tparam T 源图像数据类型
  * @param im 源图像指针
  * @param width 源图像宽度(像素)

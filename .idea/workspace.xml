@@ -2,13 +2,14 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
-      <config projectName="DIP" targetName="MorphologyTrans" />
-      <config projectName="DIP" targetName="MHDIO" />
-      <config projectName="DIP" targetName="PointTrans" />
-      <config projectName="DIP" targetName="EdgeContourDetection" />
-      <config projectName="DIP" targetName="TemplateTrans" />
       <config projectName="DIP" targetName="OrthogonalTrans" />
+      <config projectName="DIP" targetName="Segmentation" />
+      <config projectName="DIP" targetName="PointTrans" />
       <config projectName="DIP" targetName="GeometryTrans" />
+      <config projectName="DIP" targetName="EdgeContourDetection" />
+      <config projectName="DIP" targetName="MHDIO" />
+      <config projectName="DIP" targetName="TemplateTrans" />
+      <config projectName="DIP" targetName="MorphologyTrans" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -18,9 +19,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f30c84a-8d12-41e9-8053-9d86c7f420e3" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Seg/CMakeLists.txt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Seg/main.cpp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Seg/segmentation.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EdgeContour/edgecontour_detect.h" afterPath="$PROJECT_DIR$/EdgeContour/edgecontour_detect.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EdgeContour/main.cpp" afterPath="$PROJECT_DIR$/EdgeContour/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TT/CMakeLists.txt" afterPath="$PROJECT_DIR$/TT/CMakeLists.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -36,59 +41,91 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="edgecontour_detect.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="edgecontour_detect.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EdgeContour/edgecontour_detect.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="836">
-              <caret line="499" column="0" lean-forward="true" selection-start-line="499" selection-start-column="0" selection-end-line="499" selection-end-column="0" />
+            <state relative-caret-position="242">
+              <caret line="20" column="18" lean-forward="false" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
               <folding>
                 <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#345#581#0" expanded="false" />
-                <element signature="e#345#1713#0" expanded="false" />
-                <element signature="e#1715#2035#0" expanded="false" />
-                <element signature="e#1715#3684#0" expanded="false" />
-                <element signature="e#3686#4011#0" expanded="false" />
-                <element signature="e#3686#5662#0" expanded="false" />
-                <element signature="e#5664#5862#0" expanded="false" />
-                <element signature="e#5664#8606#0" expanded="false" />
-                <element signature="e#8608#8805#0" expanded="false" />
-                <element signature="e#8608#9922#0" expanded="false" />
-                <element signature="e#9924#10093#0" expanded="false" />
-                <element signature="e#9924#11547#0" expanded="false" />
-                <element signature="e#11550#11617#1" expanded="false" />
-                <element signature="e#11620#11835#0" expanded="false" />
-                <element signature="e#11620#14984#0" expanded="false" />
-                <element signature="e#14987#15285#0" expanded="false" />
-                <element signature="e#14987#17593#0" expanded="false" />
-                <element signature="e#17596#17713#1" expanded="false" />
-                <element signature="e#17646#17711#0" expanded="false" />
-                <element signature="e#17717#17961#0" expanded="false" />
-                <element signature="e#17717#19229#0" expanded="false" />
-                <element signature="e#19232#19454#0" expanded="false" />
-                <element signature="e#19232#23410#0" expanded="false" />
+                <element signature="e#345#1719#0" expanded="false" />
+                <element signature="e#1721#2041#0" expanded="false" />
+                <element signature="e#1721#3690#0" expanded="false" />
+                <element signature="e#3692#4017#0" expanded="false" />
+                <element signature="e#3692#5668#0" expanded="false" />
+                <element signature="e#5670#5868#0" expanded="false" />
+                <element signature="e#5670#8612#0" expanded="false" />
+                <element signature="e#8614#8811#0" expanded="false" />
+                <element signature="e#8614#9928#0" expanded="false" />
+                <element signature="e#9930#10099#0" expanded="false" />
+                <element signature="e#9930#11553#0" expanded="false" />
+                <element signature="e#11556#11623#1" expanded="false" />
+                <element signature="e#11626#11841#0" expanded="false" />
+                <element signature="e#11626#14990#0" expanded="false" />
+                <element signature="e#14993#15291#0" expanded="false" />
+                <element signature="e#14993#17599#0" expanded="false" />
+                <element signature="e#17602#17719#1" expanded="false" />
+                <element signature="e#17652#17717#0" expanded="false" />
+                <element signature="e#17723#17967#0" expanded="false" />
+                <element signature="e#17723#19235#0" expanded="false" />
+                <element signature="e#19238#19460#0" expanded="false" />
+                <element signature="e#19238#23416#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="edgecontour.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/edgecontour.cpp">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Seg/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2024">
-              <caret line="1605" column="9" lean-forward="false" selection-start-line="1605" selection-start-column="9" selection-end-line="1605" selection-end-column="9" />
+            <state relative-caret-position="220">
+              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/EdgeContour/main.cpp">
+        <entry file="file://$PROJECT_DIR$/Seg/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="50" column="25" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+            <state relative-caret-position="304">
+              <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
               <folding>
-                <element signature="e#0#15#0" expanded="false" />
+                <element signature="e#151#170#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PT/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="449">
+              <caret line="60" column="5" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="60" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="segmentation.h" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Seg/segmentation.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="946">
+              <caret line="43" column="28" lean-forward="true" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+              <folding>
+                <element signature="e#211#229#0" expanded="true" />
+                <element signature="e#498#510#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="242">
+              <caret line="11" column="20" lean-forward="false" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -133,44 +170,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/MT/main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2926">
-              <caret line="133" column="20" lean-forward="false" selection-start-line="133" selection-start-column="20" selection-end-line="133" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GT/main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3894">
-              <caret line="177" column="27" lean-forward="false" selection-start-line="177" selection-start-column="27" selection-end-line="177" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TT/main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2134">
-              <caret line="97" column="1" lean-forward="false" selection-start-line="97" selection-start-column="1" selection-end-line="97" selection-end-column="1" />
-              <folding>
-                <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#213#754#0" expanded="false" />
-                <element signature="e#756#1379#0" expanded="false" />
-                <element signature="e#1381#2006#0" expanded="false" />
-                <element signature="e#2008#2471#0" expanded="false" />
-                <element signature="e#2473#2947#0" expanded="false" />
-                <element signature="e#2950#3996#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
@@ -181,6 +180,7 @@
       <find>startpoint</find>
       <find>stackpoint</find>
       <find>size_t</find>
+      <find>cout</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -221,7 +221,6 @@
         <option value="$PROJECT_DIR$/PT/main.cpp" />
         <option value="$PROJECT_DIR$/MT/morphology_trans.h" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/MHDIO/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/TT/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/EdgeContour/CMakeLists.txt" />
@@ -232,7 +231,11 @@
         <option value="$PROJECT_DIR$/TT/main.cpp" />
         <option value="$PROJECT_DIR$/OT/main.cpp" />
         <option value="$PROJECT_DIR$/EdgeContour/main.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Seg/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/EdgeContour/edgecontour_detect.h" />
+        <option value="$PROJECT_DIR$/Seg/main.cpp" />
+        <option value="$PROJECT_DIR$/Seg/segmentation.h" />
       </list>
     </option>
   </component>
@@ -285,7 +288,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="EdgeContour" />
+              <option name="myItemId" value="Seg" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -304,6 +307,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Seg" />
       <recent name="$PROJECT_DIR$/EdgeContour" />
     </key>
   </component>
@@ -319,7 +323,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.EdgeContourDetection">
+  <component name="RunManager" selected="Application.Segmentation">
     <configuration default="true" type="CLion_Remote" factoryName="GDB Remote Debug" remoteCommand="" symbolFile="" sysroot="">
       <method />
     </configuration>
@@ -546,7 +550,11 @@
       <envs />
       <method />
     </configuration>
-    <list size="11">
+    <configuration default="false" name="Segmentation" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../abellRK_intrpl_order1.mhd result" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="Segmentation" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="Segmentation">
+      <envs />
+      <method />
+    </configuration>
+    <list size="12">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.GeometryTrans" />
       <item index="2" class="java.lang.String" itemvalue="Application.MHDIO" />
@@ -558,6 +566,7 @@
       <item index="8" class="java.lang.String" itemvalue="Application.MorphologyTrans" />
       <item index="9" class="java.lang.String" itemvalue="Application.EdgeContour" />
       <item index="10" class="java.lang.String" itemvalue="Application.EdgeContourDetection" />
+      <item index="11" class="java.lang.String" itemvalue="Application.Segmentation" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -611,11 +620,12 @@
       <workItem from="1499563399105" duration="11517000" />
       <workItem from="1499691085856" duration="647000" />
       <workItem from="1499692325111" duration="19263000" />
+      <workItem from="1499861649433" duration="7356000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="136836000" />
+    <option name="totallyTimeSpent" value="144192000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -630,16 +640,15 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25030527" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34486374" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29874215" sideWeight="0.485348" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31243125" sideWeight="0.514652" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24725275" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3721174" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -648,6 +657,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -662,32 +672,11 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="57" />
+      <option name="time" value="59" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/GT/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GT/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GT/geometry_trans.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="20" column="40" lean-forward="true" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/OT/main.cpp" />
     <entry file="file://$PROJECT_DIR$/OT/CMakeLists.txt" />
     <entry file="file://$PROJECT_DIR$/OT/ortho_trans.h" />
@@ -753,16 +742,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PT/point_trans.h" />
     <entry file="file://$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/morph.cpp" />
     <entry file="file://$PROJECT_DIR$/README.md" />
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TT/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
@@ -786,7 +767,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/OT/ortho_trans.h" />
-    <entry file="file://$PROJECT_DIR$/PT/main.cpp" />
     <entry file="file://$PROJECT_DIR$/OT/main.cpp" />
     <entry file="file://$PROJECT_DIR$/GT/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
@@ -848,6 +828,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PT/point_trans.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1598">
+          <caret line="75" column="35" lean-forward="true" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PT/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="60" column="5" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="60" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EdgeContour/edgecontour_detect.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="20" column="18" lean-forward="false" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+            <element signature="e#345#1719#0" expanded="false" />
+            <element signature="e#1721#2041#0" expanded="false" />
+            <element signature="e#1721#3690#0" expanded="false" />
+            <element signature="e#3692#4017#0" expanded="false" />
+            <element signature="e#3692#5668#0" expanded="false" />
+            <element signature="e#5670#5868#0" expanded="false" />
+            <element signature="e#5670#8612#0" expanded="false" />
+            <element signature="e#8614#8811#0" expanded="false" />
+            <element signature="e#8614#9928#0" expanded="false" />
+            <element signature="e#9930#10099#0" expanded="false" />
+            <element signature="e#9930#11553#0" expanded="false" />
+            <element signature="e#11556#11623#1" expanded="false" />
+            <element signature="e#11626#11841#0" expanded="false" />
+            <element signature="e#11626#14990#0" expanded="false" />
+            <element signature="e#14993#15291#0" expanded="false" />
+            <element signature="e#14993#17599#0" expanded="false" />
+            <element signature="e#17602#17719#1" expanded="false" />
+            <element signature="e#17652#17717#0" expanded="false" />
+            <element signature="e#17723#17967#0" expanded="false" />
+            <element signature="e#17723#19235#0" expanded="false" />
+            <element signature="e#19238#19460#0" expanded="false" />
+            <element signature="e#19238#23416#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/EdgeContour/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -856,10 +884,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Seg/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/EdgeContour/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="50" column="25" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+        <state relative-caret-position="283">
+          <caret line="61" column="16" lean-forward="true" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
           <folding>
             <element signature="e#0#15#0" expanded="false" />
           </folding>
@@ -868,41 +904,37 @@
     </entry>
     <entry file="file://$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/edgecontour.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2024">
+        <state relative-caret-position="22">
           <caret line="1605" column="9" lean-forward="false" selection-start-line="1605" selection-start-column="9" selection-end-line="1605" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EdgeContour/edgecontour_detect.h">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="836">
-          <caret line="499" column="0" lean-forward="true" selection-start-line="499" selection-start-column="0" selection-end-line="499" selection-end-column="0" />
+        <state relative-caret-position="242">
+          <caret line="11" column="20" lean-forward="false" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seg/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding>
-            <element signature="e#0#15#0" expanded="false" />
-            <element signature="e#345#581#0" expanded="false" />
-            <element signature="e#345#1713#0" expanded="false" />
-            <element signature="e#1715#2035#0" expanded="false" />
-            <element signature="e#1715#3684#0" expanded="false" />
-            <element signature="e#3686#4011#0" expanded="false" />
-            <element signature="e#3686#5662#0" expanded="false" />
-            <element signature="e#5664#5862#0" expanded="false" />
-            <element signature="e#5664#8606#0" expanded="false" />
-            <element signature="e#8608#8805#0" expanded="false" />
-            <element signature="e#8608#9922#0" expanded="false" />
-            <element signature="e#9924#10093#0" expanded="false" />
-            <element signature="e#9924#11547#0" expanded="false" />
-            <element signature="e#11550#11617#1" expanded="false" />
-            <element signature="e#11620#11835#0" expanded="false" />
-            <element signature="e#11620#14984#0" expanded="false" />
-            <element signature="e#14987#15285#0" expanded="false" />
-            <element signature="e#14987#17593#0" expanded="false" />
-            <element signature="e#17596#17713#1" expanded="false" />
-            <element signature="e#17646#17711#0" expanded="false" />
-            <element signature="e#17717#17961#0" expanded="false" />
-            <element signature="e#17717#19229#0" expanded="false" />
-            <element signature="e#19232#19454#0" expanded="false" />
-            <element signature="e#19232#23410#0" expanded="false" />
+            <element signature="e#151#170#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seg/segmentation.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="946">
+          <caret line="43" column="28" lean-forward="true" selection-start-line="43" selection-start-column="28" selection-end-line="43" selection-end-column="28" />
+          <folding>
+            <element signature="e#211#229#0" expanded="true" />
+            <element signature="e#498#510#0" expanded="true" />
           </folding>
         </state>
       </provider>
