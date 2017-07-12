@@ -36,28 +36,36 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="edgecontour_detect.h" pinned="false" current-in-tab="false">
+      <file leaf-file-name="edgecontour_detect.h" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/EdgeContour/edgecontour_detect.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="565" column="36" lean-forward="false" selection-start-line="565" selection-start-column="36" selection-end-line="565" selection-end-column="36" />
+            <state relative-caret-position="836">
+              <caret line="499" column="0" lean-forward="true" selection-start-line="499" selection-start-column="0" selection-end-line="499" selection-end-column="0" />
               <folding>
-                <element signature="e#228#246#0" expanded="true" />
-                <element signature="e#345#1504#0" expanded="false" />
-                <element signature="e#1506#1826#0" expanded="false" />
-                <element signature="e#1506#3475#0" expanded="false" />
-                <element signature="e#3477#3802#0" expanded="false" />
-                <element signature="e#3477#5453#0" expanded="false" />
-                <element signature="e#5455#5653#0" expanded="false" />
-                <element signature="e#5455#8397#0" expanded="false" />
-                <element signature="e#8399#8596#0" expanded="false" />
-                <element signature="e#8399#9713#0" expanded="false" />
-                <element signature="e#9715#9884#0" expanded="false" />
-                <element signature="e#9715#11338#0" expanded="false" />
-                <element signature="e#11341#11408#1" expanded="false" />
-                <element signature="e#11411#11650#0" expanded="false" />
-                <element signature="e#11411#14531#0" expanded="false" />
-                <element signature="e#16401#16413#0" expanded="true" />
+                <element signature="e#0#15#0" expanded="false" />
+                <element signature="e#345#581#0" expanded="false" />
+                <element signature="e#345#1713#0" expanded="false" />
+                <element signature="e#1715#2035#0" expanded="false" />
+                <element signature="e#1715#3684#0" expanded="false" />
+                <element signature="e#3686#4011#0" expanded="false" />
+                <element signature="e#3686#5662#0" expanded="false" />
+                <element signature="e#5664#5862#0" expanded="false" />
+                <element signature="e#5664#8606#0" expanded="false" />
+                <element signature="e#8608#8805#0" expanded="false" />
+                <element signature="e#8608#9922#0" expanded="false" />
+                <element signature="e#9924#10093#0" expanded="false" />
+                <element signature="e#9924#11547#0" expanded="false" />
+                <element signature="e#11550#11617#1" expanded="false" />
+                <element signature="e#11620#11835#0" expanded="false" />
+                <element signature="e#11620#14984#0" expanded="false" />
+                <element signature="e#14987#15285#0" expanded="false" />
+                <element signature="e#14987#17593#0" expanded="false" />
+                <element signature="e#17596#17713#1" expanded="false" />
+                <element signature="e#17646#17711#0" expanded="false" />
+                <element signature="e#17717#17961#0" expanded="false" />
+                <element signature="e#17717#19229#0" expanded="false" />
+                <element signature="e#19232#19454#0" expanded="false" />
+                <element signature="e#19232#23410#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -66,21 +74,20 @@
       <file leaf-file-name="edgecontour.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/edgecontour.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-611">
-              <caret line="1309" column="33" lean-forward="true" selection-start-line="1309" selection-start-column="33" selection-end-line="1309" selection-end-column="33" />
+            <state relative-caret-position="-2024">
+              <caret line="1605" column="9" lean-forward="false" selection-start-line="1605" selection-start-column="9" selection-end-line="1605" selection-end-column="9" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EdgeContour/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="809">
-              <caret line="58" column="18" lean-forward="true" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
+            <state relative-caret-position="192">
+              <caret line="50" column="25" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
               <folding>
                 <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#2604#3252#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -173,6 +180,7 @@
       <find>max</find>
       <find>startpoint</find>
       <find>stackpoint</find>
+      <find>size_t</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -223,8 +231,8 @@
         <option value="$PROJECT_DIR$/GT/main.cpp" />
         <option value="$PROJECT_DIR$/TT/main.cpp" />
         <option value="$PROJECT_DIR$/OT/main.cpp" />
-        <option value="$PROJECT_DIR$/EdgeContour/edgecontour_detect.h" />
         <option value="$PROJECT_DIR$/EdgeContour/main.cpp" />
+        <option value="$PROJECT_DIR$/EdgeContour/edgecontour_detect.h" />
       </list>
     </option>
   </component>
@@ -264,20 +272,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="DIP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DIP" />
-              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="DIP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GT" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -548,7 +542,7 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="EdgeContourDetection" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../test3.mhd result" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="EdgeContourDetection" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="EdgeContourDetection">
+    <configuration default="false" name="EdgeContourDetection" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../test.mhd result" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="EdgeContourDetection" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="EdgeContourDetection">
       <envs />
       <method />
     </configuration>
@@ -615,11 +609,13 @@
       <workItem from="1499270511412" duration="581000" />
       <workItem from="1499359462571" duration="3438000" />
       <workItem from="1499563399105" duration="11517000" />
+      <workItem from="1499691085856" duration="647000" />
+      <workItem from="1499692325111" duration="19263000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="116926000" />
+    <option name="totallyTimeSpent" value="136836000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -641,7 +637,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24114774" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24725275" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3721174" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -666,7 +662,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="39" />
+      <option name="time" value="57" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -860,46 +856,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/EdgeContour/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="50" column="25" lean-forward="false" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/edgecontour.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-611">
-          <caret line="1309" column="33" lean-forward="true" selection-start-line="1309" selection-start-column="33" selection-end-line="1309" selection-end-column="33" />
+        <state relative-caret-position="-2024">
+          <caret line="1605" column="9" lean-forward="false" selection-start-line="1605" selection-start-column="9" selection-end-line="1605" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/EdgeContour/edgecontour_detect.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="565" column="36" lean-forward="false" selection-start-line="565" selection-start-column="36" selection-end-line="565" selection-end-column="36" />
-          <folding>
-            <element signature="e#228#246#0" expanded="true" />
-            <element signature="e#345#1504#0" expanded="false" />
-            <element signature="e#1506#1826#0" expanded="false" />
-            <element signature="e#1506#3475#0" expanded="false" />
-            <element signature="e#3477#3802#0" expanded="false" />
-            <element signature="e#3477#5453#0" expanded="false" />
-            <element signature="e#5455#5653#0" expanded="false" />
-            <element signature="e#5455#8397#0" expanded="false" />
-            <element signature="e#8399#8596#0" expanded="false" />
-            <element signature="e#8399#9713#0" expanded="false" />
-            <element signature="e#9715#9884#0" expanded="false" />
-            <element signature="e#9715#11338#0" expanded="false" />
-            <element signature="e#11341#11408#1" expanded="false" />
-            <element signature="e#11411#11650#0" expanded="false" />
-            <element signature="e#11411#14531#0" expanded="false" />
-            <element signature="e#16401#16413#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EdgeContour/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="809">
-          <caret line="58" column="18" lean-forward="true" selection-start-line="58" selection-start-column="18" selection-end-line="58" selection-end-column="18" />
+        <state relative-caret-position="836">
+          <caret line="499" column="0" lean-forward="true" selection-start-line="499" selection-start-column="0" selection-end-line="499" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="false" />
-            <element signature="e#2604#3252#0" expanded="false" />
+            <element signature="e#345#581#0" expanded="false" />
+            <element signature="e#345#1713#0" expanded="false" />
+            <element signature="e#1715#2035#0" expanded="false" />
+            <element signature="e#1715#3684#0" expanded="false" />
+            <element signature="e#3686#4011#0" expanded="false" />
+            <element signature="e#3686#5662#0" expanded="false" />
+            <element signature="e#5664#5862#0" expanded="false" />
+            <element signature="e#5664#8606#0" expanded="false" />
+            <element signature="e#8608#8805#0" expanded="false" />
+            <element signature="e#8608#9922#0" expanded="false" />
+            <element signature="e#9924#10093#0" expanded="false" />
+            <element signature="e#9924#11547#0" expanded="false" />
+            <element signature="e#11550#11617#1" expanded="false" />
+            <element signature="e#11620#11835#0" expanded="false" />
+            <element signature="e#11620#14984#0" expanded="false" />
+            <element signature="e#14987#15285#0" expanded="false" />
+            <element signature="e#14987#17593#0" expanded="false" />
+            <element signature="e#17596#17713#1" expanded="false" />
+            <element signature="e#17646#17711#0" expanded="false" />
+            <element signature="e#17717#17961#0" expanded="false" />
+            <element signature="e#17717#19229#0" expanded="false" />
+            <element signature="e#19232#19454#0" expanded="false" />
+            <element signature="e#19232#23410#0" expanded="false" />
           </folding>
         </state>
       </provider>
