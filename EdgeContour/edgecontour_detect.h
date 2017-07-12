@@ -39,6 +39,7 @@ bool Robert(T *im, size_t width, size_t height, size_t slice) {
     double result = 0.0;
     size_t p0 = 0, p1 = 0, t = 0;
     for (int k = 0; k < slice; ++k) {
+        memset(new_im, 0, sizeof(T) * width * height);
         p0 = k * width * height;
         // 模板为2*2 防止越界，不处理最下与最右
         // 0 1
@@ -47,7 +48,10 @@ bool Robert(T *im, size_t width, size_t height, size_t slice) {
             for (int j = 0; j < width - 1; ++j) {
                 p1 = i * width + j;
                 t = p0 + p1;
-                result = std::abs(im[t] - im[t + width + 1]) + std::abs(im[t + 1] - im[t + width]);
+                // 一范数版本
+//                result = std::abs(im[t] - im[t + width + 1]) + std::abs(im[t + 1] - im[t + width]);
+                // 二范数版本
+                result = sqrt(pow(im[t] - im[t + width + 1], 2) + pow(im[t + 1] - im[t + width], 2));
                 new_im[p1] = result;
             }
         }
@@ -394,7 +398,6 @@ struct Point2D {
 /**
  * @brief 图像轮廓跟踪（非0点） 根据“探测准则“
  * 分8方向 45°一个 从左上开始顺时针 搜到下一个逆时针90° 直到返回开始点
- * @todo 解决跟踪至边界越界出错的问题
  * @tparam T 源图像数据类型
  * @param im 源图像指针
  * @param width 源图像宽度(像素)
@@ -454,11 +457,17 @@ bool Trace(T *im, size_t width, size_t height, size_t slice) {
         currentPt.width = startPt.width;
         findStartPt = false;
         bool findBlackPt = false;
+        int current_x = 0, current_y = 0;
         while (!findStartPt) {
             findBlackPt = false;
             while (!findBlackPt) {
-                size_t t = p + (currentPt.height + directions[direct][1]) * width +
-                           currentPt.width + directions[direct][0];
+                // 防止越界
+                current_y = currentPt.height + directions[direct][1];
+                current_x = currentPt.width + directions[direct][0];
+                if (current_x < 0 || current_x >= width || current_y < 0 || current_y >= height)
+                    break;
+                size_t t = p + (current_y) * width +
+                           current_x;
                 // 如果搜索方向上出现白点
                 if (im[t] > 0) {
                     findBlackPt = true;
@@ -484,6 +493,89 @@ bool Trace(T *im, size_t width, size_t height, size_t slice) {
 
         memcpy(im + p, new_im, sizeof(T) * width * height);
     }
+    delete[] new_im;
+    return true;
+}
+
+
+/**
+ * @brief 实现边界跟踪 串行边界分割 (起始点 搜索准则 终止条件)
+ * 将8领域中梯度最大的点作为边界，同时作为下个搜索起始点 当梯度小于某个阈值时搜索停止
+ * @attention 搜索顺序很有讲究 依次为左下、左、左上、下、上、右下、右、右上
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param threshold 梯度阈值
+ * @return 操作是否成功
+ */
+template<typename T>
+bool EdgeTrack(T *im, int width, int height, int slice, int threshold) {
+    if (!im) return false;
+    // 为存储边界图像开辟内存空间
+    T *new_im = nullptr;
+    try {
+        new_im = new T[width * height];
+    }
+    catch (std::bad_alloc) {
+        std::cout << "Failed to alloc memory!\n";
+        return false;
+    }
+    T mv = std::numeric_limits<T>::max();
+    // 8邻域遍历的方向（必须）
+    // 依次为左下、左、左上、下、上、右下、右、右上
+    static int dirctx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+    static int dircty[] = {1, 0, -1, 1, -1, 1, 0, -1};
+    int p0 = 0, p1 = 0;
+    int mx = 0, my = 0;  //最大梯度点所在坐标
+    // Roberts算子求梯度 此时源图数据已变为梯度数值
+    Robert(im, width, height, slice);
+    for (int k = 0; k < slice; ++k) {
+        p0 = k * width * height;
+        memset(new_im, 0, sizeof(T) * width * height);
+        // 求出最大梯度点和值
+        double max_grad = 0.0;
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                if (im[p0 + i * width + j] > max_grad) {
+                    max_grad = im[p0 + i * width + j];
+                    my = i;
+                    mx = j;
+                }
+            }
+        }
+        int current_x = 0, current_y = 0;   //8领域中标记坐标
+        int cmx = 0, cmy = 0;
+        // 当满足阈值条件时 遍历跟踪边界
+        while (max_grad > threshold) {
+            new_im[my * width + mx] = mv;
+//            std::cout << "(" << mx + 1 << ", " << my + 1 << "): " << max_grad << "\n";
+            // 最大梯度点置0
+            max_grad = 0.0;
+            // 8领域找最大梯度点
+            for (int i = 0; i < 8; ++i) {
+                current_x = mx + dirctx[i];
+                current_y = my + dircty[i];
+                p1 = current_y * width + current_x;
+                // 防止越界
+                if (current_x >= 0 && current_x < width &&
+                    current_y >= 0 && current_y < height) {
+                    // 若大于此前最大梯度值 且并非边界
+                    if ((im[p0 + p1] > max_grad) &&
+                        (new_im[p1] == 0)) {
+                        max_grad = im[p0 + p1];
+                        cmx = current_x;
+                        cmy = current_y;
+                    }
+                }
+            }
+            mx = cmx;
+            my = cmy;
+        }
+        memcpy(im + p0, new_im, sizeof(T) * width * height);
+    }
+
     delete[] new_im;
     return true;
 }
@@ -680,5 +772,6 @@ bool Fill2(T *im, size_t width, size_t height, size_t slice,
     }
     return true;
 }
+
 
 #endif //DIP_EDGECONTOUR_DETECT_H
