@@ -24,9 +24,41 @@ bool TestSeg(const char *inname, const char *outname, size_t index) {
     int n = 0;
     switch (index) {
         case 0:
+            std::cout << "Enter the threshold: \t";
+            std::cin >> n;
+            t_bg = clock();
+
+            flag = ::RobertsOperator(reader->GetImData(), reader->GetImWidth(),
+                                     reader->GetImHeight(), reader->GetImSlice(), n);
+            break;
+        case 1:
+            std::cout << "Enter the threshold: \t";
+            std::cin >> n;
+            t_bg = clock();
+
+            flag = ::SobelOperator(reader->GetImData(), reader->GetImWidth(),
+                                   reader->GetImHeight(), reader->GetImSlice(), n);
+            break;
+        case 2:
+            std::cout << "Enter the threshold: \t";
+            std::cin >> n;
+            t_bg = clock();
+
+            flag = ::PrewittOperator(reader->GetImData(), reader->GetImWidth(),
+                                     reader->GetImHeight(), reader->GetImSlice(), n);
+            break;
+        case 3:
+            std::cout << "Enter the threshold: \t";
+            std::cin >> n;
+            t_bg = clock();
+
+            flag = ::LaplacianOperator(reader->GetImData(), reader->GetImWidth(),
+                                       reader->GetImHeight(), reader->GetImSlice(), n);
+            break;
+        case 4:
             std::cout << "Enter the number:\t";
             std::cin >> n;
-            t_bg=clock();
+            t_bg = clock();
             flag = ::RegionSegAdaptive(reader->GetImData(), reader->GetImWidth(),
                                        reader->GetImHeight(), reader->GetImSlice(), n);
             break;
@@ -52,7 +84,11 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     std::cout << "Functions:\n"
-              << "0: Region Adaptive Seg\n";
+              << "0: Robert Seg\n"
+              << "1: Sobel Seg\n"
+              << "2: Prewitt Seg\n"
+              << "3: Laplace Seg\n"
+              << "4: Region Adaptive Seg\n";
     size_t index = 0;
     std::cin >> index;
     return TestSeg(argv[1], argv[2], index);

@@ -11,6 +11,77 @@
 #include <cstddef>
 #include <limits>
 #include <cstring>
+#include <edgecontour_detect.h>
+#include <point_trans.h>
+
+/**
+ * @brief 并行边界分割 Robert
+ * @note Robert算子+阈值分割
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param threshold 阈值
+ * @return 操作是否成功
+ */
+template<typename T>
+bool RobertsOperator(T *im, size_t width, size_t height, size_t slice, int threshold) {
+    if (!Robert(im, width, height, slice)) return false;
+    return ThresholdTrans(im, width, height, slice, threshold);
+}
+
+/**
+ * @brief 并行边界分割 Sobel
+ * @note Sobel算子+阈值分割
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param threshold 阈值
+ * @return 操作是否成功
+ */
+template<typename T>
+bool SobelOperator(T *im, size_t width, size_t height, size_t slice, int threshold) {
+    if (!Sobel(im, width, height, slice)) return false;
+    return ThresholdTrans(im, width, height, slice, threshold);
+}
+
+/**
+ * @brief 并行边界分割 Prewitt算子
+ * @note Prewitt算子+阈值分割
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param threshold 阈值
+ * @return 操作是否成功
+ */
+template<typename T>
+bool PrewittOperator(T *im, size_t width, size_t height, size_t slice, int threshold) {
+    if (!Prewitt(im, width, height, slice)) return false;
+    return ThresholdTrans(im, width, height, slice, threshold);
+}
+
+/**
+ * @brief 并行边界 Laplace算子
+ * @note Laplace算子+阈值分割
+ * @tparam T 源图像数据类型
+ * @param im 源图像指针
+ * @param width 源图像宽度(像素)
+ * @param height 源图像高度(像素)
+ * @param slice 源图像切片数
+ * @param threshold 阈值
+ * @return 操作是否成功
+ */
+template<typename T>
+bool LaplacianOperator(T *im, size_t width, size_t height, size_t slice, int threshold) {
+    if (!LaplaceSharpen(im, width, height, slice)) return false;
+    return ThresholdTrans(im, width, height, slice, threshold);
+}
+
 
 /**
  * @brief 自适应阈值分割函数 阈值不固定。
@@ -103,5 +174,6 @@ bool RegionSegAdaptive(T *im, size_t width, size_t height, size_t slice, int cou
     }
     return true;
 }
+
 
 #endif //DIP_SEGMENTATION_H
