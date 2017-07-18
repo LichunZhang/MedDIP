@@ -20,24 +20,24 @@ int TestEdgeDetection(const char *inname, const char *outname, size_t index) {
     clock_t t_bg = clock();
     switch (index) {
         case 0:
-            flag = ::Robert(reader->GetImData(), reader->GetImWidth(),
-                            reader->GetImHeight(), reader->GetImSlice());
+            flag = ::RobertOperator(reader->GetImData(), reader->GetImWidth(),
+                                    reader->GetImHeight(), reader->GetImSlice());
             break;
         case 1:
-            flag = ::Sobel(reader->GetImData(), reader->GetImWidth(),
-                           reader->GetImHeight(), reader->GetImSlice());
+            flag = ::SobelOperator(reader->GetImData(), reader->GetImWidth(),
+                                   reader->GetImHeight(), reader->GetImSlice());
             break;
         case 2:
-            flag = ::Prewitt(reader->GetImData(), reader->GetImWidth(),
-                             reader->GetImHeight(), reader->GetImSlice());
+            flag = ::PrewittOperator(reader->GetImData(), reader->GetImWidth(),
+                                     reader->GetImHeight(), reader->GetImSlice());
             break;
         case 3:
-            flag = ::Krisch(reader->GetImData(), reader->GetImWidth(),
-                            reader->GetImHeight(), reader->GetImSlice());
+            flag = ::KrischOperator(reader->GetImData(), reader->GetImWidth(),
+                                    reader->GetImHeight(), reader->GetImSlice());
             break;
         case 4:
-            flag = ::GaussLaplace(reader->GetImData(), reader->GetImWidth(),
-                                  reader->GetImHeight(), reader->GetImSlice());
+            flag = ::GaussLaplaceOperator(reader->GetImData(), reader->GetImWidth(),
+                                          reader->GetImHeight(), reader->GetImSlice());
             break;
         case 5:
             flag = ::Contour(reader->GetImData(), reader->GetImWidth(),
@@ -48,16 +48,12 @@ int TestEdgeDetection(const char *inname, const char *outname, size_t index) {
                            reader->GetImHeight(), reader->GetImSlice());
             break;
         case 7:
-            flag = ::EdgeTrack(reader->GetImData(), reader->GetImWidth(),
-                               reader->GetImHeight(), reader->GetImSlice(), 0);
+            flag = ::Fill(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
+                          reader->GetImWidth() / 2, reader->GetImHeight() / 2);
             break;
         case 8:
-            flag = ::Fill(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
-                          reader->GetImWidth() / 2, reader->GetImHeight() / 2, 0);
-            break;
-        case 9:
             flag = ::Fill2(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice(),
-                           reader->GetImWidth() / 2, reader->GetImHeight() / 2, 0);
+                           reader->GetImWidth() / 2, reader->GetImHeight() / 2);
             break;
         default:
             break;
@@ -81,16 +77,15 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     std::cout << "Functions:\n"
-              << "0: Robert Edge Detection\n"
-              << "1: Sobel Edge Detection\n"
-              << "2: Prewitt Edge Detection\n"
-              << "3: Krisch Edge Detection\n"
+              << "0: RobertOperator Edge Detection\n"
+              << "1: SobelOperator Edge Detection\n"
+              << "2: PrewittOperator Edge Detection\n"
+              << "3: KrischOperator Edge Detection\n"
               << "4: Gaussian Laplace Edge Detection\n"
               << "5: Contour\n"
               << "6: Trace Contour\n"
-              << "7: Trace Edge\n"
-              << "8: Seed fill\n"
-              << "9: Seed fill 2\n";
+              << "7: Seed fill\n"
+              << "8: Seed fill 2\n";
     size_t index = 0;
     std::cin >> index;
     return TestEdgeDetection(argv[1], argv[2], index);
