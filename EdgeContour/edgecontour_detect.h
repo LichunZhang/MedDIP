@@ -42,8 +42,8 @@ bool RobertOperator(T *im, size_t width, size_t height, size_t slice) {
         memset(new_im, 0, sizeof(T) * width * height);
         p0 = k * width * height;
         // 模板为2*2 防止越界，不处理最下与最右
-        // 0 1
-        // 2 3
+        // 0 1       1 0
+        // -1 0      0 -1
         for (int i = 0; i < height - 1; ++i) {
             for (int j = 0; j < width - 1; ++j) {
                 p1 = i * width + j;

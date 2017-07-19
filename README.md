@@ -7,8 +7,7 @@ The processing functions are divided into 10 groups:
 4. **Image Enhancement**_(Finished)_: Template, GaussianSmooth, MedianFilter, GradSharp, LaplaceSharp.
 5. **Image Morphology** _(Finished)_: Erosion, Dilation, Open, Close, Thinning.
 6. **Edge & Contour** _(Finished_): RobertOperator, Sobel Operator,  PrewittOperator, KirschOperator, GaussianOperator, Contour, FillSeed.
-7. **Image Segmentation**(_Finished_): RobertSeg, SobelSeg, PrewittSeg, LaplacianSeg, EdgeTrack, RegionAdaptiveSeg, RegionGrow, Canny.
+7. **Image Segmentation**(_Finished_): RobertSeg, SobelSeg, PrewittSeg, LaplacianSeg, EdgeTrack, RegionAdaptiveSeg, RegionGrow, Canny(Writting).
 8. **Image Registration**:
 9. **Image Restoration**:
 10. **Image Compression**:
-
