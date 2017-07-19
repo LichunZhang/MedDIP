@@ -7,38 +7,59 @@
 #include <mhd_reader.h>
 #include "point_trans.h"
 
-int TestThresholdTrans(const char *input, const char *output, int threshold) {
-    MHDReader *reader = new MHDReader(input);
+
+int TestPointTrans(int index, const char *inname, const char *outname) {
+    if (!inname || !outname) return 1;
+    MHDReader *reader = new MHDReader(inname);
     if (!reader->GetImData()) {
         std::cout << "Read input failed!\n";
         delete reader;
         return -1;
     }
-
-    bool flag =
-            ::ThresholdTrans(reader->GetImData(), reader->GetImWidth(),
-                             reader->GetImHeight(), reader->GetImSlice(), threshold);
-    if (flag)
-        reader->SaveAs(output);
-    delete reader;
-    return 0;
-}
-
-int TestHisEqualize(const char *input, const char *output) {
-    MHDReader *reader = new MHDReader(input);
-    if (!reader->GetImData()) {
-        std::cout << "Read input failed!\n";
+    bool flag = false;
+    clock_t t_bg = clock();
+    int th1 = 0, th2 = 0;
+    switch (index) {
+        case 0:
+            std::cout << "Enter the threshold:\t";
+            std::cin >> th1;
+            t_bg = clock();
+            flag = ::ThresholdTrans(reader->GetImData(), reader->GetImWidth(),
+                                    reader->GetImHeight(), reader->GetImSlice(), th1);
+            break;
+        case 1:
+            std::cout << "Enter the low threshold and up threshold:\t";
+            std::cin >> th1 >> th2;
+            t_bg = clock();
+            flag = ::WindowTrans(reader->GetImData(), reader->GetImWidth(),
+                                 reader->GetImHeight(), reader->GetImSlice(), th1, th2);
+            break;
+        case 2: {
+            std::cout << "Enter the x1, y1, x2, y2 (x2 > x1, y2 > y1):\t";
+            int x1, y1, x2, y2;
+            std::cin >> x1 >> y1 >> x2 >> y2;
+            t_bg = clock();
+            flag = ::GrayStretch(reader->GetImData(), reader->GetImWidth(),
+                                 reader->GetImHeight(), reader->GetImSlice(), x1, y1, x2, y2);
+            break;
+        }
+        case 3:
+            flag = ::HisEqualize(reader->GetImData(), reader->GetImWidth(),
+                                 reader->GetImHeight(), reader->GetImSlice());
+            break;
+        default:
+            break;
+    }
+    clock_t t_ed = clock();
+    if (flag) {
+        std::cout << "Time: " << double(t_ed - t_bg) / 1000 << " ms\n";
+        reader->SaveAs(outname);
+        delete reader;
+        return 0;
+    } else {
         delete reader;
         return -1;
     }
-
-    bool flag =
-            ::HisEqualize(reader->GetImData(), reader->GetImWidth(),
-                          reader->GetImHeight(), reader->GetImSlice());
-    if (flag)
-        reader->SaveAs(output);
-    delete reader;
-    return 0;
 }
 
 int main(int argc, char *argv[]) {
@@ -48,15 +69,10 @@ int main(int argc, char *argv[]) {
     }
     std::cout << "Functions:\n"
               << "0: Threshold Trans\n"
-              << "2: Histogram Equalize\n";
+              << "1: Window Trans\n"
+              << "2: Gray Stretch\n"
+              << "3: Histogram Equalize\n";
     size_t index = 0;
     std::cin >> index;
-    switch (index) {
-        case 0:
-            return TestThresholdTrans(argv[1], argv[2], atoi(argv[3]));
-        case 1:
-            return TestHisEqualize(argv[1],argv[2]);
-        default:
-            return 1;
-    }
+    return TestPointTrans(index, argv[1], argv[2]);
 }

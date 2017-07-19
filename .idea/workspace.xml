@@ -5,13 +5,18 @@
       <config projectName="DIP" targetName="OrthogonalTrans" />
       <config projectName="DIP" targetName="SegmentationTest" />
       <config projectName="DIP" targetName="PointTrans" />
+      <config projectName="DIP" targetName="TemplateTransTest" />
+      <config projectName="DIP" targetName="OrthogonalTransTest" />
       <config projectName="DIP" targetName="EdgeContourTest" />
       <config projectName="DIP" targetName="EdgeContourDetection" />
+      <config projectName="DIP" targetName="MorphologyTransTest" />
       <config projectName="DIP" targetName="TemplateTrans" />
       <config projectName="DIP" targetName="MorphologyTrans" />
       <config projectName="DIP" targetName="PointTransTest" />
+      <config projectName="DIP" targetName="Segmentation" />
       <config projectName="DIP" targetName="GeometryTrans" />
       <config projectName="DIP" targetName="MHDIO" />
+      <config projectName="DIP" targetName="GeometryTransTest" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -21,13 +26,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f30c84a-8d12-41e9-8053-9d86c7f420e3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Seg/canny.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Seg/canny.h" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EdgeContour/edgecontour_detect.h" afterPath="$PROJECT_DIR$/EdgeContour/edgecontour_detect.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GT/CMakeLists.txt" afterPath="$PROJECT_DIR$/GT/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MT/CMakeLists.txt" afterPath="$PROJECT_DIR$/MT/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MT/main.cpp" afterPath="$PROJECT_DIR$/MT/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OT/CMakeLists.txt" afterPath="$PROJECT_DIR$/OT/CMakeLists.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/OT/main.cpp" afterPath="$PROJECT_DIR$/OT/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PT/main.cpp" afterPath="$PROJECT_DIR$/PT/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/PT/point_trans.h" afterPath="$PROJECT_DIR$/PT/point_trans.h" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Seg/CMakeLists.txt" afterPath="$PROJECT_DIR$/Seg/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Seg/segmentation.h" afterPath="$PROJECT_DIR$/Seg/segmentation.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TT/main.cpp" afterPath="$PROJECT_DIR$/TT/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TT/CMakeLists.txt" afterPath="$PROJECT_DIR$/TT/CMakeLists.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -43,63 +52,22 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="edgecontour_detect.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/EdgeContour/edgecontour_detect.h">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OT/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="45" column="25" lean-forward="false" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#345#587#0" expanded="false" />
-                <element signature="e#1750#2070#0" expanded="false" />
-                <element signature="e#1750#3727#0" expanded="false" />
-                <element signature="e#3729#4054#0" expanded="false" />
-                <element signature="e#3729#5713#0" expanded="false" />
-                <element signature="e#5715#5913#0" expanded="false" />
-                <element signature="e#5715#8665#0" expanded="false" />
-                <element signature="e#8667#8864#0" expanded="false" />
-                <element signature="e#9991#10160#0" expanded="false" />
-                <element signature="e#9991#11614#0" expanded="false" />
-                <element signature="e#11617#11684#1" expanded="false" />
-                <element signature="e#11687#11902#0" expanded="false" />
-                <element signature="e#11687#15051#0" expanded="false" />
-                <element signature="e#15174#15391#0" expanded="false" />
-                <element signature="e#16677#16906#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="66">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TT/main.cpp">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Seg/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="30" column="25" lean-forward="false" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#15#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="template_trans.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TT/template_trans.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2640">
-              <caret line="120" column="3" lean-forward="false" selection-start-line="120" selection-start-column="3" selection-end-line="120" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#290#398#0" expanded="false" />
-                <element signature="e#400#698#0" expanded="false" />
-                <element signature="e#700#1045#0" expanded="false" />
-                <element signature="e#700#2687#0" expanded="false" />
-                <element signature="e#2689#2856#0" expanded="false" />
-                <element signature="e#2689#3126#0" expanded="false" />
-                <element signature="e#3128#3390#0" expanded="false" />
-                <element signature="e#3128#4200#0" expanded="false" />
-                <element signature="e#4202#4472#0" expanded="false" />
-                <element signature="e#4202#5782#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="176">
+              <caret line="8" column="34" lean-forward="false" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -107,96 +75,73 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PT/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1320">
-              <caret line="60" column="5" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="60" selection-end-column="5" />
+            <state relative-caret-position="-267">
+              <caret line="41" column="19" lean-forward="false" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/EdgeContour/main.cpp">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PT/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1540">
-              <caret line="70" column="1" lean-forward="false" selection-start-line="60" selection-start-column="4" selection-end-line="70" selection-end-column="1" />
+            <state relative-caret-position="308">
+              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ortho_trans.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/OT/ortho_trans.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MT/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="66">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MT/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="176">
+              <caret line="82" column="1" lean-forward="true" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
               <folding>
                 <element signature="e#0#15#0" expanded="false" />
+                <element signature="e#227#2150#0" expanded="false" />
+                <element signature="e#2152#2577#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="point_trans.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PT/point_trans.h">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/GT/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#283#469#0" expanded="false" />
-                <element signature="e#283#1018#0" expanded="false" />
-                <element signature="e#1020#1167#0" expanded="false" />
-                <element signature="e#1020#2526#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="66">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="segmentation.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Seg/segmentation.h">
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EdgeContour/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="66" column="0" lean-forward="false" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#325#536#0" expanded="false" />
-                <element signature="e#325#771#0" expanded="false" />
-                <element signature="e#773#982#0" expanded="false" />
-                <element signature="e#773#1214#0" expanded="false" />
-                <element signature="e#1216#1431#0" expanded="false" />
-                <element signature="e#1216#1667#0" expanded="false" />
-                <element signature="e#1669#1884#0" expanded="false" />
-                <element signature="e#1669#2121#0" expanded="false" />
-                <element signature="e#2123#2427#0" expanded="false" />
-                <element signature="e#2123#4752#0" expanded="false" />
-                <element signature="e#4754#4982#0" expanded="false" />
-                <element signature="e#4754#8003#0" expanded="false" />
-                <element signature="e#8006#8298#0" expanded="false" />
-                <element signature="e#8006#10653#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="canny.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Seg/canny.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="29" column="40" lean-forward="false" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
-              <folding>
-                <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#170#352#0" expanded="false" />
-                <element signature="e#937#1283#0" expanded="false" />
-                <element signature="e#937#4867#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="canny.h" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Seg/canny.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="132" column="3" lean-forward="true" selection-start-line="132" selection-start-column="3" selection-end-line="132" selection-end-column="3" />
-              <folding>
-                <element signature="e#0#15#0" expanded="false" />
-                <element signature="e#326#560#0" expanded="false" />
-                <element signature="e#326#2170#0" expanded="false" />
-                <element signature="e#2172#2422#0" expanded="false" />
-                <element signature="e#2172#3418#0" expanded="false" />
-                <element signature="e#3420#3673#0" expanded="false" />
-                <element signature="e#3420#4496#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="44">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -231,7 +176,6 @@
         <option value="$PROJECT_DIR$/OT/discos_trans.h" />
         <option value="$PROJECT_DIR$/OT/fourier_trans.h" />
         <option value="$PROJECT_DIR$/OT/ot_includes.h.h" />
-        <option value="$PROJECT_DIR$/OT/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/OT/fourier_trans.cpp" />
         <option value="$PROJECT_DIR$/OT/discos_trans.cpp" />
         <option value="$PROJECT_DIR$/OT/ot_includes.h" />
@@ -241,35 +185,36 @@
         <option value="$PROJECT_DIR$/GT/geo_trans.h" />
         <option value="$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/TemplateTrans.cpp" />
         <option value="$PROJECT_DIR$/TT/template_trans.cpp" />
-        <option value="$PROJECT_DIR$/GT/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/MHDIO/mhd_reader.cpp" />
         <option value="$PROJECT_DIR$/PT/point_trans.cpp" />
         <option value="$PROJECT_DIR$/GeometryTrans/CMakeLists.txt" />
         <option value="$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/morph.cpp" />
-        <option value="$PROJECT_DIR$/MT/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/PT/point_trans.h" />
-        <option value="$PROJECT_DIR$/PT/main.cpp" />
         <option value="$PROJECT_DIR$/MT/morphology_trans.h" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/MHDIO/CMakeLists.txt" />
         <option value="$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/edgecontour.cpp" />
-        <option value="$PROJECT_DIR$/MT/main.cpp" />
         <option value="$PROJECT_DIR$/GT/main.cpp" />
-        <option value="$PROJECT_DIR$/OT/main.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/TT/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/EdgeContour/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/PT/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/Seg/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/TT/template_trans.h" />
         <option value="$PROJECT_DIR$/EdgeContour/main.cpp" />
-        <option value="$PROJECT_DIR$/Seg/main.cpp" />
         <option value="$PROJECT_DIR$/TT/main.cpp" />
         <option value="$PROJECT_DIR$/EdgeContour/edgecontour_detect.h" />
         <option value="$PROJECT_DIR$/Seg/segmentation.h" />
         <option value="$PROJECT_DIR$/Seg/segmentation.cpp" />
         <option value="$PROJECT_DIR$/Seg/canny.h" />
         <option value="$PROJECT_DIR$/Seg/canny.cpp" />
+        <option value="$PROJECT_DIR$/Seg/main.cpp" />
+        <option value="$PROJECT_DIR$/PT/main.cpp" />
+        <option value="$PROJECT_DIR$/PT/point_trans.h" />
+        <option value="$PROJECT_DIR$/OT/main.cpp" />
+        <option value="$PROJECT_DIR$/TT/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/GT/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/MT/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/OT/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/Seg/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/MT/main.cpp" />
       </list>
     </option>
   </component>
@@ -322,7 +267,35 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="TT" />
+              <option name="myItemId" value="PT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DIP" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DIP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OT" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DIP" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="DIP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GT" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -562,6 +535,10 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="GeometryTransTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="GeometryTransTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="GeometryTransTest">
+      <envs />
+      <method />
+    </configuration>
     <configuration default="false" name="MHDIO" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="MHDIO" CONFIG_NAME="Debug">
       <envs />
       <method />
@@ -582,15 +559,23 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="TemplateTransTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="TemplateTransTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="TemplateTransTest">
+      <envs />
+      <method />
+    </configuration>
     <configuration default="false" name="PointTrans" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../abellRK_intrpl_order1.mhd binary 127" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="PointTrans" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="PointTrans">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="PointTransTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="PointTransTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="PointTransTest">
+    <configuration default="false" name="MorphologyTrans" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="binary.mhd result2" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="MorphologyTrans" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="MorphologyTrans">
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="MorphologyTrans" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="binary.mhd result2" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="MorphologyTrans" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="MorphologyTrans">
+    <configuration default="false" name="MorphologyTransTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="MorphologyTransTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="MorphologyTransTest">
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="OrthogonalTransTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="OrthogonalTransTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="OrthogonalTransTest">
       <envs />
       <method />
     </configuration>
@@ -614,22 +599,30 @@
       <envs />
       <method />
     </configuration>
-    <list size="15">
+    <configuration default="false" name="PointTransTest" type="CMakeRunConfiguration" factoryName="Application" PROGRAM_PARAMS="../abellRK_intrpl_order1.mhd result" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DIP" TARGET_NAME="PointTransTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DIP" RUN_TARGET_NAME="PointTransTest">
+      <envs />
+      <method />
+    </configuration>
+    <list size="19">
       <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
       <item index="1" class="java.lang.String" itemvalue="Application.GeometryTrans" />
-      <item index="2" class="java.lang.String" itemvalue="Application.MHDIO" />
-      <item index="3" class="java.lang.String" itemvalue="Application.FourierTrans" />
-      <item index="4" class="java.lang.String" itemvalue="Application.OrthogonalTrans" />
-      <item index="5" class="java.lang.String" itemvalue="Application.GeoTrans" />
-      <item index="6" class="java.lang.String" itemvalue="Application.TemplateTrans" />
-      <item index="7" class="java.lang.String" itemvalue="Application.PointTrans" />
-      <item index="8" class="java.lang.String" itemvalue="Application.PointTransTest" />
-      <item index="9" class="java.lang.String" itemvalue="Application.MorphologyTrans" />
-      <item index="10" class="java.lang.String" itemvalue="Application.EdgeContour" />
-      <item index="11" class="java.lang.String" itemvalue="Application.EdgeContourDetection" />
-      <item index="12" class="java.lang.String" itemvalue="Application.EdgeContourTest" />
-      <item index="13" class="java.lang.String" itemvalue="Application.Segmentation" />
-      <item index="14" class="java.lang.String" itemvalue="Application.SegmentationTest" />
+      <item index="2" class="java.lang.String" itemvalue="Application.GeometryTransTest" />
+      <item index="3" class="java.lang.String" itemvalue="Application.MHDIO" />
+      <item index="4" class="java.lang.String" itemvalue="Application.FourierTrans" />
+      <item index="5" class="java.lang.String" itemvalue="Application.OrthogonalTrans" />
+      <item index="6" class="java.lang.String" itemvalue="Application.GeoTrans" />
+      <item index="7" class="java.lang.String" itemvalue="Application.TemplateTrans" />
+      <item index="8" class="java.lang.String" itemvalue="Application.TemplateTransTest" />
+      <item index="9" class="java.lang.String" itemvalue="Application.PointTrans" />
+      <item index="10" class="java.lang.String" itemvalue="Application.MorphologyTrans" />
+      <item index="11" class="java.lang.String" itemvalue="Application.MorphologyTransTest" />
+      <item index="12" class="java.lang.String" itemvalue="Application.OrthogonalTransTest" />
+      <item index="13" class="java.lang.String" itemvalue="Application.EdgeContour" />
+      <item index="14" class="java.lang.String" itemvalue="Application.EdgeContourDetection" />
+      <item index="15" class="java.lang.String" itemvalue="Application.EdgeContourTest" />
+      <item index="16" class="java.lang.String" itemvalue="Application.Segmentation" />
+      <item index="17" class="java.lang.String" itemvalue="Application.SegmentationTest" />
+      <item index="18" class="java.lang.String" itemvalue="Application.PointTransTest" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -687,12 +680,12 @@
       <workItem from="1500270881817" duration="6117000" />
       <workItem from="1500289996430" duration="6153000" />
       <workItem from="1500379741524" duration="7926000" />
-      <workItem from="1500443607150" duration="8108000" />
+      <workItem from="1500443607150" duration="14544000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="172496000" />
+    <option name="totallyTimeSpent" value="178932000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -705,10 +698,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26251528" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26251528" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34486374" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34486374" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29874215" sideWeight="0.485348" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31243125" sideWeight="0.514652" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914045" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -738,7 +732,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="65" />
+      <option name="time" value="68" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -789,44 +783,13 @@
     <entry file="file://$PROJECT_DIR$/MHDIO/mhd_reader.cpp" />
     <entry file="file://$PROJECT_DIR$/PT/point_trans.cpp" />
     <entry file="file://$PROJECT_DIR$/MHDIO/mhd_io.h" />
-    <entry file="file://$PROJECT_DIR$/OT/CMakeLists.txt" />
-    <entry file="file://$PROJECT_DIR$/GT/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MT/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="44" lean-forward="false" selection-start-line="4" selection-start-column="44" selection-end-line="4" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Downloads/toLiao/DigitalImageProcessing/morph.cpp" />
     <entry file="file://$PROJECT_DIR$/README.md" />
-    <entry file="file://$PROJECT_DIR$/MT/morphology_trans.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="287" column="5" lean-forward="false" selection-start-line="287" selection-start-column="5" selection-end-line="287" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MHDIO/CMakeLists.txt" />
-    <entry file="file://$PROJECT_DIR$/OT/ortho_trans.h" />
-    <entry file="file://$PROJECT_DIR$/OT/main.cpp" />
     <entry file="file://$PROJECT_DIR$/GT/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3894">
           <caret line="177" column="27" lean-forward="false" selection-start-line="177" selection-start-column="27" selection-end-line="177" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MT/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2926">
-          <caret line="133" column="20" lean-forward="false" selection-start-line="133" selection-start-column="20" selection-end-line="133" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -872,45 +835,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TT/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PT/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EdgeContour/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Seg/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="26" lean-forward="false" selection-start-line="8" selection-start-column="26" selection-end-line="8" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Seg/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2090">
-          <caret line="95" column="18" lean-forward="false" selection-start-line="95" selection-start-column="18" selection-end-line="95" selection-end-column="18" />
-          <folding>
-            <element signature="e#151#170#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TT/template_trans.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2640">
@@ -931,42 +855,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PT/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1320">
-          <caret line="60" column="5" lean-forward="false" selection-start-line="44" selection-start-column="4" selection-end-line="60" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PT/point_trans.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#15#0" expanded="false" />
-            <element signature="e#283#469#0" expanded="false" />
-            <element signature="e#283#1018#0" expanded="false" />
-            <element signature="e#1020#1167#0" expanded="false" />
-            <element signature="e#1020#2526#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/EdgeContour/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1540">
           <caret line="70" column="1" lean-forward="false" selection-start-line="60" selection-start-column="4" selection-end-line="70" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#15#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TT/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="30" column="25" lean-forward="false" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
           <folding>
             <element signature="e#0#15#0" expanded="false" />
           </folding>
@@ -1045,8 +937,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Seg/canny.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="132" column="3" lean-forward="true" selection-start-line="132" selection-start-column="3" selection-end-line="132" selection-end-column="3" />
+        <state relative-caret-position="6">
+          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
           <folding>
             <element signature="e#0#15#0" expanded="false" />
             <element signature="e#326#560#0" expanded="false" />
@@ -1055,6 +947,144 @@
             <element signature="e#2172#3418#0" expanded="false" />
             <element signature="e#3420#3673#0" expanded="false" />
             <element signature="e#3420#4496#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seg/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="12" column="28" lean-forward="false" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+          <folding>
+            <element signature="e#151#170#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PT/point_trans.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+            <element signature="e#283#469#0" expanded="false" />
+            <element signature="e#283#1018#0" expanded="false" />
+            <element signature="e#1021#1312#0" expanded="false" />
+            <element signature="e#1021#1892#0" expanded="false" />
+            <element signature="e#1894#2212#0" expanded="false" />
+            <element signature="e#1894#3433#0" expanded="false" />
+            <element signature="e#3435#3582#0" expanded="false" />
+            <element signature="e#3435#4947#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OT/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="488">
+          <caret line="54" column="21" lean-forward="false" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TT/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TT/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-494">
+          <caret line="44" column="45" lean-forward="false" selection-start-line="44" selection-start-column="45" selection-end-line="44" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PT/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-267">
+          <caret line="41" column="19" lean-forward="false" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OT/ortho_trans.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EdgeContour/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GT/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/OT/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seg/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="34" lean-forward="false" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PT/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MT/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MT/morphology_trans.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="28" column="5" lean-forward="false" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MT/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="82" column="1" lean-forward="true" selection-start-line="82" selection-start-column="1" selection-end-line="82" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+            <element signature="e#227#2150#0" expanded="false" />
+            <element signature="e#2152#2577#0" expanded="false" />
           </folding>
         </state>
       </provider>

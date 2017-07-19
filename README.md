@@ -1,7 +1,7 @@
 # MedDIP
 The project is developed mainly for exercising medical image processing. 
 The processing functions are divided into 10 groups:
-1. **PointTrans**: *ThresholdTrans*, WindowTrans, GrayStretch, _Equalize_
+1. **PointTrans**(_Finished_): ThresholdTrans, WindowTrans, GrayStretch, Equalize
 2. **GeometryTrans** (_Finished_): Translation, Mirror, Transpose, Zoom, Rotation, Interpolation.
 3. **OrthogonalTrans**: _FFT_, IFFT, _Fourier_, _DCT_, Walsh, Hotelling, DWT .
 4. **Image Enhancement**_(Finished)_: Template, GaussianSmooth, MedianFilter, GradSharp, LaplaceSharp.
