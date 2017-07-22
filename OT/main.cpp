@@ -8,33 +8,40 @@
 #include <iostream>
 #include "ortho_trans.h"
 
-void TestFFT(const char *input, const char *output) {
-    MHDReader *reader = new MHDReader(input);
-    if (!reader->GetImData()) {
-        std::cout << "Read input failed!\n";
-        delete reader;
-        return;
-    }
-    bool flag =
-            ::Fourier(reader->GetImData(),
-                      reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
-    if (flag)
-        reader->SaveAs(output);
-    delete reader;
-}
 
-void TestDCT(const char *input, const char *output) {
-    MHDReader *reader = new MHDReader(input);
+int TestOrthogonal(int index, const char *inname, const char *outname) {
+    if (!inname || !outname) return 1;
+    MHDReader *reader = new MHDReader(inname);
     if (!reader->GetImData()) {
         std::cout << "Read input failed!\n";
         delete reader;
-        return;
+        return -1;
     }
-    bool flag =
-            ::DiscretCosin(reader->GetImData(), reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
-    if (flag)
-        reader->SaveAs(output);
-    delete reader;
+    bool flag = false;
+    clock_t t_bg = clock();
+    switch (index) {
+        case 0:
+            flag = ::Fourier(reader->GetImData(),
+                             reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
+            break;
+        case 1:
+            flag = ::DiscretCosin(reader->GetImData(),
+                                  reader->GetImWidth(), reader->GetImHeight(), reader->GetImSlice());
+            break;
+        default:
+            break;
+    }
+
+    clock_t t_ed = clock();
+    if (flag) {
+        std::cout << "Time: " << double(t_ed - t_bg) / 1000 << " ms\n";
+        reader->SaveAs(outname);
+        delete reader;
+        return 0;
+    } else {
+        delete reader;
+        return -1;
+    }
 }
 
 int main(int argc, char *argv[]) {
@@ -43,22 +50,11 @@ int main(int argc, char *argv[]) {
         return -1;
     }
     std::cout << "Functions:\n"
-              << "1: FFT\n"
-              << "2: DCT\n";
+              << "0: FFT\n"
+              << "1: DCT\n";
     size_t index = 0;
     std::cin >> index;
-    switch (index) {
-        case 1:
-            TestFFT(argv[1], argv[2]);
-            break;
-        case 2:
-            TestDCT(argv[1], argv[2]);
-            break;
-        default:
-            break;
-    }
-    return 0;
-
+    return TestOrthogonal(index, argv[1], argv[2]);
 }
 
 

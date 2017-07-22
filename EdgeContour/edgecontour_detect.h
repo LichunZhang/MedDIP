@@ -16,7 +16,7 @@
 
 /**
  * @brief 用Robert边缘检测算子对图像进行边缘检测。目标图像为灰度图像。
- * g(x,y)=|f(x,y))-f(x+1,y+1)|+|f(x,y+1)-f(x+1,y)|
+ * @note g(x,y)=|f(x,y))-f(x+1,y+1)|+|f(x,y+1)-f(x+1,y)|
  * @tparam T 源图像数据类型
  * @param im 源图像指针
  * @param width 源图像宽度(像素)
@@ -25,7 +25,7 @@
  * @return 操作是否成功
  */
 template<typename T>
-bool Robert(T *im, size_t width, size_t height, size_t slice) {
+bool RobertOperator(T *im, size_t width, size_t height, size_t slice) {
     if (!im) return false;
     T *new_im = nullptr;
     try {
@@ -42,8 +42,8 @@ bool Robert(T *im, size_t width, size_t height, size_t slice) {
         memset(new_im, 0, sizeof(T) * width * height);
         p0 = k * width * height;
         // 模板为2*2 防止越界，不处理最下与最右
-        // 0 1
-        // 2 3
+        // 0 1       1 0
+        // -1 0      0 -1
         for (int i = 0; i < height - 1; ++i) {
             for (int j = 0; j < width - 1; ++j) {
                 p1 = i * width + j;
@@ -75,7 +75,7 @@ bool Robert(T *im, size_t width, size_t height, size_t slice) {
  * @return 操作是否成功
  */
 template<typename T>
-bool Sobel(T *im, size_t width, size_t height, size_t slice) {
+bool SobelOperator(T *im, size_t width, size_t height, size_t slice) {
     if (!im) return false;
     T *new_im1 = nullptr;
     T *new_im2 = nullptr;
@@ -141,7 +141,7 @@ bool Sobel(T *im, size_t width, size_t height, size_t slice) {
  * @return 操作是否成功
  */
 template<typename T>
-bool Prewitt(T *im, size_t width, size_t height, size_t slice) {
+bool PrewittOperator(T *im, size_t width, size_t height, size_t slice) {
     if (!im) return false;
     T *new_im1 = nullptr;
     T *new_im2 = nullptr;
@@ -204,7 +204,7 @@ bool Prewitt(T *im, size_t width, size_t height, size_t slice) {
  * @return 操作是否成功
  */
 template<typename T>
-bool Krisch(T *im, size_t width, size_t height, size_t slice) {
+bool KrischOperator(T *im, size_t width, size_t height, size_t slice) {
     if (!im) return false;
     T *new_im1 = nullptr;
     T *new_im2 = nullptr;
@@ -299,7 +299,7 @@ bool Krisch(T *im, size_t width, size_t height, size_t slice) {
  * @return 操作是否成功
  */
 template<typename T>
-bool GaussLaplace(T *im, size_t width, size_t height, size_t slice) {
+bool GaussLaplaceOperator(T *im, size_t width, size_t height, size_t slice) {
 
     if (!im) return false;
     T *new_im = nullptr;
@@ -497,90 +497,6 @@ bool Trace(T *im, size_t width, size_t height, size_t slice) {
     return true;
 }
 
-
-/**
- * @brief 实现边界跟踪 串行边界分割 (起始点 搜索准则 终止条件)
- * 将8领域中梯度最大的点作为边界，同时作为下个搜索起始点 当梯度小于某个阈值时搜索停止
- * @attention 搜索顺序很有讲究 依次为左下、左、左上、下、上、右下、右、右上
- * @tparam T 源图像数据类型
- * @param im 源图像指针
- * @param width 源图像宽度(像素)
- * @param height 源图像高度(像素)
- * @param slice 源图像切片数
- * @param threshold 梯度阈值
- * @return 操作是否成功
- */
-template<typename T>
-bool EdgeTrack(T *im, int width, int height, int slice, int threshold) {
-    if (!im) return false;
-    // 为存储边界图像开辟内存空间
-    T *new_im = nullptr;
-    try {
-        new_im = new T[width * height];
-    }
-    catch (std::bad_alloc) {
-        std::cout << "Failed to alloc memory!\n";
-        return false;
-    }
-    T mv = std::numeric_limits<T>::max();
-    // 8邻域遍历的方向（必须）
-    // 依次为左下、左、左上、下、上、右下、右、右上
-    static int dirctx[] = {-1, -1, -1, 0, 0, 1, 1, 1};
-    static int dircty[] = {1, 0, -1, 1, -1, 1, 0, -1};
-    int p0 = 0, p1 = 0;
-    int mx = 0, my = 0;  //最大梯度点所在坐标
-    // Roberts算子求梯度 此时源图数据已变为梯度数值
-    Robert(im, width, height, slice);
-    for (int k = 0; k < slice; ++k) {
-        p0 = k * width * height;
-        memset(new_im, 0, sizeof(T) * width * height);
-        // 求出最大梯度点和值
-        double max_grad = 0.0;
-        for (int i = 0; i < height; ++i) {
-            for (int j = 0; j < width; ++j) {
-                if (im[p0 + i * width + j] > max_grad) {
-                    max_grad = im[p0 + i * width + j];
-                    my = i;
-                    mx = j;
-                }
-            }
-        }
-        int current_x = 0, current_y = 0;   //8领域中标记坐标
-        int cmx = 0, cmy = 0;
-        // 当满足阈值条件时 遍历跟踪边界
-        while (max_grad > threshold) {
-            new_im[my * width + mx] = mv;
-//            std::cout << "(" << mx + 1 << ", " << my + 1 << "): " << max_grad << "\n";
-            // 最大梯度点置0
-            max_grad = 0.0;
-            // 8领域找最大梯度点
-            for (int i = 0; i < 8; ++i) {
-                current_x = mx + dirctx[i];
-                current_y = my + dircty[i];
-                p1 = current_y * width + current_x;
-                // 防止越界
-                if (current_x >= 0 && current_x < width &&
-                    current_y >= 0 && current_y < height) {
-                    // 若大于此前最大梯度值 且并非边界
-                    if ((im[p0 + p1] > max_grad) &&
-                        (new_im[p1] == 0)) {
-                        max_grad = im[p0 + p1];
-                        cmx = current_x;
-                        cmy = current_y;
-                    }
-                }
-            }
-            mx = cmx;
-            my = cmy;
-        }
-        memcpy(im + p0, new_im, sizeof(T) * width * height);
-    }
-
-    delete[] new_im;
-    return true;
-}
-
-
 struct Seed {
     int height;
     int width;
@@ -593,21 +509,19 @@ struct Seed {
 
 
 /**
- * @brief 种子填充(漫水) 将种子点联通区域高于阈值的点全部置0
- * 低效版本, 从种子点开始统计堆栈中点的4领域 符合条件压入堆栈 取出继续
+ * @brief 种子填充(漫水) 二值版（0和最大值）
+ * @note 低效版本, 从种子点开始统计堆栈中点的4领域 符合条件压入堆栈 取出继续
  * @tparam T 源图像数据类型
  * @param im 源图像指针
  * @param width 源图像宽度(像素)
  * @param height 源图像高度(像素)
  * @param slice 源图像切片数
- * @param threshold 漫水阈值
  * @return 操作是否成功
  */
 template<typename T>
-bool Fill(T *im, size_t width, size_t height, size_t slice,
-          size_t pos_x, size_t pos_y, int threshold) {
+bool Fill(T *im, size_t width, size_t height, size_t slice, size_t pos_x, size_t pos_y) {
     if (!im) return false;
-
+    T max_val = std::numeric_limits<T>::max();
     std::stack<Seed> seeds;
     int current_x = 0, current_y = 0;
     size_t p = 0, t = 0;
@@ -623,18 +537,18 @@ bool Fill(T *im, size_t width, size_t height, size_t slice,
             t = p + current_y * width + current_x;
             im[t] = 0;
 
-            // 判断上下4领域四点是否大于阈值，若是则压入堆栈，注意防止越界
+            // 判断上下4领域四点是否为白，若是则压入堆栈，注意防止越界
             // 左
-            if (current_x > 0 && im[t - 1] > threshold)
+            if (current_x > 0 && im[t - 1] == max_val)
                 seeds.push(Seed(current_y, current_x - 1));
             // 右
-            if (current_x < width - 1 && im[t + 1] > threshold)
+            if (current_x < width - 1 && im[t + 1] == max_val)
                 seeds.push(Seed(current_y, current_x + 1));
             // 上
-            if (current_y > 0 && im[t - width] > threshold)
+            if (current_y > 0 && im[t - width] == max_val)
                 seeds.push(Seed(current_y - 1, current_x));
             // 下
-            if (current_y < height - 1 && im[t + width] > threshold)
+            if (current_y < height - 1 && im[t + width] == max_val)
                 seeds.push(Seed(current_y + 1, current_x));
         }
     }
@@ -643,9 +557,8 @@ bool Fill(T *im, size_t width, size_t height, size_t slice,
 
 
 /**
- * @brief 种子填充 扫描线版 堆栈最小化
- * 测试对象是一个个像素段 两段以边界值的像素为边界
- * 每一个像素段只保留最右(左)的像素作为种子像素
+ * @brief 种子填充 二值图 扫描线版 堆栈最小化
+ * @note 测试对象是一个个像素段 两段以边界值的像素为边界 每一个像素段只保留最右(左)的像素作为种子像素
  * @tparam T 源图像数据类型
  * @param im 源图像指针
  * @param width 源图像宽度(像素)
@@ -654,10 +567,9 @@ bool Fill(T *im, size_t width, size_t height, size_t slice,
  * @return 操作是否成功
  */
 template<typename T>
-bool Fill2(T *im, size_t width, size_t height, size_t slice,
-           size_t pos_x, size_t pos_y, int threshold) {
+bool Fill2(T *im, size_t width, size_t height, size_t slice, size_t pos_x, size_t pos_y) {
     if (!im) return false;
-
+    T max_val = std::numeric_limits<T>::max();
     // 种子堆栈和指针
     std::stack<Seed> seeds;
     int current_x = 0, current_y = 0;       // 当前像素位置
@@ -684,7 +596,7 @@ bool Fill2(T *im, size_t width, size_t height, size_t slice,
             // 向左填充
             while (!fill_l) {
                 // 若遇到边界
-                if (im[p + current_y * width + current_x] <= threshold) {
+                if (im[p + current_y * width + current_x] == 0) {
                     fill_l = true;
                     x_l = current_x + 1;
                 } else {
@@ -710,7 +622,7 @@ bool Fill2(T *im, size_t width, size_t height, size_t slice,
             current_y = buffer_y;
             while (!fill_r) {
                 // 若遇到边界
-                if (im[p + current_y * width + current_x] <= threshold) {
+                if (im[p + current_y * width + current_x] == 0) {
                     fill_r = true;
                     x_r = current_x - 1;
                 } else {
@@ -735,14 +647,14 @@ bool Fill2(T *im, size_t width, size_t height, size_t slice,
             // 开始在左右边界确定的像素段中找每一段像素段最右边界
             for (int i = x_l; i <= x_r; ++i) {
                 isSeed = false;
-                while (i < x_r && im[p + current_y * width + i] > threshold) {
+                while (i < x_r && im[p + current_y * width + i] == max_val) {
                     isSeed = true;
                     ++i;
                 }
                 // 说明有种子点 遇到阈值线下点或者到达最右边界
                 if (isSeed) {
                     // 达最右边界且符合阈值
-                    if (i == x_r && im[p + current_y * width + i] > threshold)
+                    if (i == x_r && im[p + current_y * width + i] == max_val)
                         seeds.push(Seed(current_y, i));
                         // 不符合阈值
                     else
@@ -756,13 +668,13 @@ bool Fill2(T *im, size_t width, size_t height, size_t slice,
             // 开始在左右边界确定的像素段中找每一段像素段最右边界
             for (int i = x_l; i <= x_r; ++i) {
                 isSeed = false;
-                while (i < x_r && im[p + current_y * width + i] > threshold) {
+                while (i < x_r && im[p + current_y * width + i] == max_val) {
                     isSeed = true;
                     ++i;
                 }
                 // 说明有种子点 遇到阈值线下点或者超最右边界
                 if (isSeed) {
-                    if (i == x_r && im[p + current_y * width + i] > threshold)
+                    if (i == x_r && im[p + current_y * width + i] == max_val)
                         seeds.push(Seed(current_y, i));
                     else
                         seeds.push(Seed(current_y, i - 1));
